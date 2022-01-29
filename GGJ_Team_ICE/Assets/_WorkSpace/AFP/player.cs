@@ -13,6 +13,9 @@ public class player : MonoBehaviour
     [SerializeField, Header("主人公アニメーション")]
     public Animator anim;
 
+    [SerializeField, Header("オセロ2D入れる")]
+    public GameObject board;
+
     [Header("主人公の操作できるかを管理")]
     public bool move_stop = false;
 
@@ -26,6 +29,9 @@ public class player : MonoBehaviour
     Vector3 endPos;
 
     private int direction = 1;      //キャラの方向　
+
+
+    private bool[,] masu = new bool[8, 8];
 
     int x=2,y = 2;
 
@@ -44,6 +50,9 @@ public class player : MonoBehaviour
 
     private void Move()
     {
+        //masu = board.GetComponent<Boraddata>().bord;
+
+
         elapsed += Time.deltaTime;
         float t = elapsed / moveTime;
 
@@ -73,6 +82,7 @@ public class player : MonoBehaviour
         Vector2 input_abs = new Vector2(Mathf.Abs(Input.GetAxis("HorizontalL_P" + p_num)), Mathf.Abs(Input.GetAxis("VerticalL_P" + p_num)));
         Vector2 input= new Vector2(Input.GetAxis("HorizontalL_P" + p_num), Input.GetAxis("VerticalL_P" + p_num));
 
+        Debug.Log("" + board.GetComponent<Boraddata>().bord[1, 1]);
         //スタート、終了時動かせない
         if (!move_stop)
         {
