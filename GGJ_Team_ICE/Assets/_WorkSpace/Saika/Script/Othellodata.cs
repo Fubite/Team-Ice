@@ -2,29 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Othellodata : MonoBehaviour
+public class Othellodata :Boraddata
 {
     [Header("true=çï")] public bool frontback = true;
+    SpriteRenderer data;
     public int pointX,pointY;
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            reverse();
-        }
-    }
     public void reverse()
     {
+        data = GetComponent<SpriteRenderer>();
         if (frontback)
         {
-            transform.Rotate(new Vector3(180, 0, 0));
+            data.color=Color.white;
             frontback = false;
         }
         else
         {
-            transform.Rotate(new Vector3(-180, 0, 0));
+            data.color = Color.black;
             frontback = true;
         }
+        ReverseAll(pointX, pointY);
     }
     public void instance(int x,int y)
     {
