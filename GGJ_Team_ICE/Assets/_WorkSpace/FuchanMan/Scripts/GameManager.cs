@@ -6,7 +6,6 @@ using UnityEngine.UI;
 //debug
 using UnityEngine.SceneManagement;
 //
-
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
@@ -52,7 +51,7 @@ public class GameManager : MonoBehaviour
             case STATE.GAME:
                 if (elapsed > 2f)
                 {
-                    state = STATE.GAME;
+                    state = STATE.END;
                     stateTxt.text = "END";
                     elapsed = 0f;
                 }
@@ -60,7 +59,7 @@ public class GameManager : MonoBehaviour
             case STATE.END:
                 if(Input.GetButton("Submit"))
                 {
-                    SceneManager.LoadScene("Result");
+                    SceneManager.LoadScene("TestResult");   
                 }
                 break;
         }
