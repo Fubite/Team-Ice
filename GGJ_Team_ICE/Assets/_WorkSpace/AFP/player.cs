@@ -13,13 +13,14 @@ public class player : MonoBehaviour
     [SerializeField, Header("主人公アニメーション")]
     public Animator anim;
 
+    [SerializeField, Header("オセロ2D入れる")]
+    public GameObject board;
+
     [Header("主人公の操作できるかを管理")]
     public bool move_stop = false;
 
     private Vector3 p_vec = new Vector3(0, 0, 0);           //主人公へ代入用ベクトル
-    private Vector3 mem_move_amount = new Vector3(0, 0, 0); //主人公の移動量記憶
     bool isMove = false; 
-    private int move_count = 0;
 
     [SerializeField, Header("移動時間")]
     float moveTime = 1;
@@ -27,14 +28,31 @@ public class player : MonoBehaviour
     Vector3 startPos;
     Vector3 endPos;
 
+    private int direction = 1;      //キャラの方向　
+
+
+    private bool[,] masu = new bool[8, 8];
+
+    int x=2,y = 2;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (p_num == 1)
+        {
+            anim.SetBool("player", true);
+        }
+        else
+        {
+            anim.SetBool("player", false);
+        }
     }
 
     private void Move()
     {
+        //masu = board.GetComponent<Boraddata>().bord;
+
+
         elapsed += Time.deltaTime;
         float t = elapsed / moveTime;
 
@@ -48,7 +66,11 @@ public class player : MonoBehaviour
             isMove = false;
             elapsed = 0f;
 
+            //アニメーション終了
             anim.SetBool("down", false);
+            anim.SetBool("up", false);
+            anim.SetBool("right", false);
+            anim.SetBool("left", false);
         }
     }
 
@@ -59,52 +81,75 @@ public class player : MonoBehaviour
         //コントローラー入力の絶対値取得
         Vector2 input_abs = new Vector2(Mathf.Abs(Input.GetAxis("HorizontalL_P" + p_num)), Mathf.Abs(Input.GetAxis("VerticalL_P" + p_num)));
         Vector2 input= new Vector2(Input.GetAxis("HorizontalL_P" + p_num), Input.GetAxis("VerticalL_P" + p_num));
-        mem_move_amount = this.gameObject.transform.position;
-        p_vec = new Vector3(0, 0, 0);
 
+        Debug.Log("" + board.GetComponent<Boraddata>().bord[1, 1]);
         //スタート、終了時動かせない
         if (!move_stop)
         {
-            //移動処理
-            if (!isMove)
+            Debug.Log(x + ":" + y);
+            //盤面外はいけない
+            if (x > 0 && x < 7 && y > 0 && y < 7)
             {
-                //上下優先処理
-                if (input_abs.x < input_abs.y)
+                //移動処理
+                if (!isMove)
                 {
-                    if (-input.y > 0)//上移動処理
+                    //上下優先処理
+                    if (input_abs.x < input_abs.y)
                     {
-                        startPos = transform.position;
-                        endPos = transform.position + new Vector3(0, 1, 0);
-                        isMove = true;
+                        //上にが自分とは違う色の場合
+                        //if(y-1==kuro)
+                        if (-input.y > 0)//上移動処理
+                        {
+                            startPos = transform.position;
+                            endPos = transform.position + new Vector3(0, 1, 0);
+                            isMove = true;
+                            anim.SetBool("up", true);
+                            anim.SetFloat("idleDir" + p_num, 0);
+                            direction = 0;
+                        }
+                        else if (-input.y < 0)//下移動処理
+                        {
+                            startPos = transform.position;
+                            endPos = transform.position + new Vector3(0, -1, 0);
+                            isMove = true;
+                            anim.SetBool("down", true);
+                            anim.SetFloat("idleDir" + p_num, 1);
+                            direction = 1;
+                        }
                     }
-                    else if (-input.y < 0)//下移動処理
+                    else//左右優先処理
                     {
-                        startPos = transform.position;
-                        endPos = transform.position + new Vector3(0, -1, 0);
-                        anim.SetBool("down", true); Debug.Log("bbb");
-                        isMove = true;
+                        if (input.x > 0)//右優先処理
+                        {
+                            startPos = transform.position;
+                            endPos = transform.position + new Vector3(1, 0, 0);
+                            isMove = true;
+                            anim.SetBool("right", true);
+                            anim.SetFloat("idleDir" + p_num, 2);
+                            direction = 2;
+                        }
+                        else if (input.x < 0)//左優先処理
+                        {
+                            startPos = transform.position;
+                            endPos = transform.position + new Vector3(-1, 0, 0);
+                            isMove = true;
+                            anim.SetBool("left", true);
+                            anim.SetFloat("idleDir" + p_num, 3);
+                            direction = 3;
+                        }
                     }
                 }
-                else//左右優先処理
+                else
                 {
-                    if (input.x > 0)//右優先処理
-                    {
-                        startPos = transform.position;
-                        endPos = transform.position + new Vector3(1, 0, 0);
-                        isMove = true;
-                    }
-                    else if (input.x < 0)//左優先処理
-                    {
-                        startPos = transform.position;
-                        endPos = transform.position + new Vector3(-1, 0, 0);
-                        isMove = true;
-                    }
+                    Move();
                 }
             }
-            else
-            {
-                Move();
-            }
+
+
+            //ひっくり返す処理
+
+
+
         }
     }
 }
