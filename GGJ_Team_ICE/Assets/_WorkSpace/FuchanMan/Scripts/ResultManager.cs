@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//debug
+using UnityEngine.SceneManagement;
+//
+
 public class ResultManager : MonoBehaviour
 {
     // Start is called before the first frame update

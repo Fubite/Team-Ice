@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+//debug
+using UnityEngine.SceneManagement;
+//
+
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
@@ -53,9 +58,9 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case STATE.END:
-                if(Input.GetButton(""))
+                if(Input.GetButton("Submit"))
                 {
-
+                    SceneManager.LoadScene("Result");
                 }
                 break;
         }
