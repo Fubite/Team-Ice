@@ -12,17 +12,24 @@ public class GameManager : MonoBehaviour
     float finishTime = 60f;
     float currentTime;
     [SerializeField]
+    Canvas gameCanvas;
+    [SerializeField]
     Text txtTime;
     [SerializeField]
     Text txtCount;
-
     [SerializeField]
-    Text stateTxt = null;
+    Canvas resultCanvas;
+    [SerializeField]
+    Sprite[] winSprite = new Sprite[2];
+    [SerializeField]
+    Image winCharaImg;
+
     enum STATE
     {
         START,
         GAME,
         END,
+        RESULT
     }
 
     STATE state;
@@ -39,8 +46,9 @@ public class GameManager : MonoBehaviour
     //ƒQ[ƒ€ŠJŽnŽžéŒ¾
     public void Ready(GameMaster.Rule _rule)
     {
+        gameCanvas.enabled = true;
+        resultCanvas.enabled = false;
         ChangeState(STATE.START);
-
     }
 
     void CountTextInit()
@@ -48,36 +56,30 @@ public class GameManager : MonoBehaviour
         txtCount.text = "";
     }
 
-    void ChangeResult()
-    {
-        SimpleFadeManager.Instance.FadeSceneChange("TestResult");
-    }
-
-
     void ChangeState(STATE _state)
     {
         switch (_state)
         {
             case STATE.START:
-                stateTxt.text = "START";
                 txtCount.text = "3";
                 currentTime = finishTime;
                 txtTime.text = "Time : " + Mathf.CeilToInt(currentTime);
-                elapsed = 0.0f;
                 break;
             case STATE.GAME:
                 txtCount.text = "START!";
-                stateTxt.text = "GAME";
-                elapsed = 0f;
                 Invoke("CountTextInit", 1);
                 break;
             case STATE.END:
                 txtCount.text = "FINISH!";
-                stateTxt.text = "END";
                 Invoke("CountTextInit", 2);
-                Invoke("ChangeResult", 2);
+                break;
+            case STATE.RESULT:
+                gameCanvas.enabled = false;
+                resultCanvas.enabled = true;
+                winCharaImg.sprite = winSprite[0];
                 break;
         }
+        elapsed = 0f;
         state = _state;
     }
 
@@ -103,7 +105,16 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case STATE.END:
-
+                if(elapsed > 2f)
+                {
+                    ChangeState(STATE.RESULT);
+                }
+                break;
+            case STATE.RESULT:
+                if(Input.GetButtonDown("Submit"))
+                {
+                    SimpleFadeManager.Instance.FadeSceneChange("TestTitle");
+                }
                 break;
         }
     }
