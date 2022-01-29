@@ -55,12 +55,19 @@ public class player : MonoBehaviour
             x = 7; y = 7;
         }
         //boardデータの取得
-        masu = board.omoteura;
+        for(int i=0;i<8;i++)
+        {
+            for(int j=0;j<8;j++)
+            {
+                masu[i,j] = board.getOthel[i,j].frontback;
+            }
+        }
+        
 
         Debug.Log("" + masu[x, 7 - y]);
         for (int i = 0; i < 8; i++)
         {
-            Debug.Log(i + ":" + board.omoteura[0, i]);
+            //Debug.Log(i + ":" + board.omoteura[0, i]);
         }
     }
 
@@ -96,13 +103,19 @@ public class player : MonoBehaviour
         Vector2 input= new Vector2(Input.GetAxis("HorizontalL_P" + p_num), Input.GetAxis("VerticalL_P" + p_num));
 
         //boardデータの取得
-        masu = board.get(8,8);
-
-        Debug.Log("" + masu[x, 7 - y]);
         for (int i = 0; i < 8; i++)
         {
-            Debug.Log(i + ":" + board.get(8, 8)[0, i]);
+            for (int j = 0; j < 8; j++)
+            {
+                masu[i, j] = board.getOthel[i, j].frontback;
+            }
         }
+
+        //Debug.Log("" + masu[x, 7 - y]);
+        //for (int i = 0; i < 8; i++)
+        //{
+        //    Debug.Log(i + ":" + board.get(8, 8)[0, i]);
+        //}
 
         //スタート、終了時動かせない
         if (!move_stop)
