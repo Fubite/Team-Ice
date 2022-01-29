@@ -52,4 +52,19 @@ public class Boraddata:MonoBehaviour
         Reverse(h, v, 1, 1);  //右下方向
         Reverse(h, v, -1, 1); //左下方向
     }
+    public int getcount(bool boolean)//入れた引数の数を数える関数　制限時間終了時の集計用
+    {
+        int x = 0;
+        for (int i = 0; i < omoteura.Length; i++)
+        {
+            for (int j = 0; j < omoteura.Length; j++)
+            {
+                if (omoteura[i, j] == boolean)
+                {
+                    x++;
+                }
+            }
+        }
+        return x;
+    }
 }

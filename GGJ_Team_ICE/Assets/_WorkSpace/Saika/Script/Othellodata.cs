@@ -7,18 +7,26 @@ public class Othellodata :Boraddata
     [Header("true=çï")] public bool frontback = true;//Ç±ÇÃÉIÉZÉçÇÃó†ï\
     SpriteRenderer data;
     public int pointX,pointY;
+    private void Start()
+    {
+        data = GetComponent<SpriteRenderer>();
+    }
+    public void Update()
+    {
+        frontback = get(pointX, pointY);
+    }
     public void reverse()//Ç–Ç¡Ç≠ÇËï‘Ç∑ä÷êî
     {
         data = GetComponent<SpriteRenderer>();
         if (frontback)
         {
-            data.color=Color.white;
-            frontback = false;
+            data.color = Color.white;
+            omoteura[pointX, pointY] = false;
         }
         else
         {
             data.color = Color.black;
-            frontback = true;
+            omoteura[pointX, pointY] = true;
         }
         ReverseAll(pointX, pointY);
     }
