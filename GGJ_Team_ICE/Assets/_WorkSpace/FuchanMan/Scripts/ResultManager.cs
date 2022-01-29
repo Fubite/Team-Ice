@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//debug
-using UnityEngine.SceneManagement;
-//
 public class ResultManager : MonoBehaviour
 {
+    bool winner = true;
     // Start is called before the first frame update
     void Start()
     {
-        
+        winner = GameMaster.Instance.winner;
     }
 
     // Update is called once per frame
@@ -17,7 +15,7 @@ public class ResultManager : MonoBehaviour
     {
         if (Input.GetButton("Submit"))
         {
-            SceneManager.LoadScene("TestTitle");
+            SimpleFadeManager.Instance.FadeSceneChange("TestTitle");
         }
     }
 }

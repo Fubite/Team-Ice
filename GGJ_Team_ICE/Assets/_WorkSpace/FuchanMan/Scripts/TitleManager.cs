@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//debug
-using UnityEngine.SceneManagement;
-//
 public class TitleManager : MonoBehaviour
 {
     enum MENU
