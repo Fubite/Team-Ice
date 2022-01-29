@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     float currentTime;
     [SerializeField]
     Text txtTime;
+    [SerializeField]
+    Text txtCount;
 
     [SerializeField]
     Text stateTxt = null;
@@ -37,10 +39,46 @@ public class GameManager : MonoBehaviour
     //ƒQ[ƒ€ŠJŽnŽžéŒ¾
     public void Ready(GameMaster.Rule _rule)
     {
-        state = STATE.START;
-        stateTxt.text = "START";
-        currentTime = finishTime;
-        elapsed = 0.0f;
+        ChangeState(STATE.START);
+
+    }
+
+    void CountTextInit()
+    {
+        txtCount.text = "";
+    }
+
+    void ChangeResult()
+    {
+        SimpleFadeManager.Instance.FadeSceneChange("TestResult");
+    }
+
+
+    void ChangeState(STATE _state)
+    {
+        switch (_state)
+        {
+            case STATE.START:
+                stateTxt.text = "START";
+                txtCount.text = "3";
+                currentTime = finishTime;
+                txtTime.text = "Time : " + Mathf.CeilToInt(currentTime);
+                elapsed = 0.0f;
+                break;
+            case STATE.GAME:
+                txtCount.text = "START!";
+                stateTxt.text = "GAME";
+                elapsed = 0f;
+                Invoke("CountTextInit", 1);
+                break;
+            case STATE.END:
+                txtCount.text = "FINISH!";
+                stateTxt.text = "END";
+                Invoke("CountTextInit", 2);
+                Invoke("ChangeResult", 2);
+                break;
+        }
+        state = _state;
     }
 
     // Update is called once per frame
@@ -50,27 +88,22 @@ public class GameManager : MonoBehaviour
         switch(state)
         {
             case STATE.START:
-                if(elapsed > 2f)
+                txtCount.text = (Mathf.FloorToInt(3 - elapsed) + 1).ToString();
+                if(elapsed >= 3f)
                 {
-                    state = STATE.GAME;
-                    stateTxt.text = "GAME";
-                    elapsed = 0f;
+                    ChangeState(STATE.GAME);
                 }
                 break;
             case STATE.GAME:
                 currentTime -= Time.deltaTime;
+                txtTime.text = "Time : " + Mathf.CeilToInt(currentTime);
                 if (0 >= currentTime)
                 {
-                    state = STATE.END;
-                    stateTxt.text = "END";
-                    elapsed = 0f;
+                    ChangeState(STATE.END);
                 }
                 break;
             case STATE.END:
-                if(Input.GetButton("Submit"))
-                {
-                    SimpleFadeManager.Instance.FadeSceneChange("TestResult");   
-                }
+
                 break;
         }
     }
