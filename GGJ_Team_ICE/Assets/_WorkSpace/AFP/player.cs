@@ -30,7 +30,10 @@ public class player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (p_num == 1)
+            anim.SetBool("player", true);
+        else
+            anim.SetBool("player", false);
     }
 
     private void Move()
@@ -48,7 +51,11 @@ public class player : MonoBehaviour
             isMove = false;
             elapsed = 0f;
 
+            //アニメーション終了
             anim.SetBool("down", false);
+            anim.SetBool("up", false);
+            anim.SetBool("right", false);
+            anim.SetBool("left", false);
         }
     }
 
@@ -76,12 +83,13 @@ public class player : MonoBehaviour
                         startPos = transform.position;
                         endPos = transform.position + new Vector3(0, 1, 0);
                         isMove = true;
+                        anim.SetBool("up", true);
                     }
                     else if (-input.y < 0)//下移動処理
                     {
                         startPos = transform.position;
                         endPos = transform.position + new Vector3(0, -1, 0);
-                        anim.SetBool("down", true); Debug.Log("bbb");
+                        anim.SetBool("down", true);
                         isMove = true;
                     }
                 }
@@ -92,12 +100,14 @@ public class player : MonoBehaviour
                         startPos = transform.position;
                         endPos = transform.position + new Vector3(1, 0, 0);
                         isMove = true;
+                        anim.SetBool("right", true);
                     }
                     else if (input.x < 0)//左優先処理
                     {
                         startPos = transform.position;
                         endPos = transform.position + new Vector3(-1, 0, 0);
                         isMove = true;
+                        anim.SetBool("left", true);
                     }
                 }
             }
