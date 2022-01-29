@@ -35,9 +35,10 @@ public class Othellodata :Boraddata
         }
         ReverseAll(pointX, pointY);
     }
-    public void instance(int x,int y)
+    public void instance(int x,int y,bool boolean)
     {
         pointX = x;
         pointY = y;
+        set(x, y, boolean);
     }
 }
