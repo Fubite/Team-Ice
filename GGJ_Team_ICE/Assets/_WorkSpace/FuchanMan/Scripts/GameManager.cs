@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField,Header("ボードデータ")]
-    Boraddata boradData = null;
+    Othellodata othelloData = null;
 
     [SerializeField]
     player w_player;    //白プレイヤー
@@ -23,13 +23,21 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Text txtCount = null;
     [SerializeField]
+    Image whiteSmallImg = null;
+    [SerializeField]
+    Image blackSmallImg = null;
+    [SerializeField]
+    Text whiteTxt = null;
+    [SerializeField]
+    Text blackTxt = null;
+    [SerializeField]
     Image blackImg = null; 
     [SerializeField]
-    Text blackCntTxt = null;
+    Text blackSumCntTxt = null;
     [SerializeField]
     Image whiteImg = null;
     [SerializeField]
-    Text whiteCntTxt = null;
+    Text whiteSumCntTxt = null;
     [SerializeField]
     Canvas resultCanvas = null;
     [SerializeField]
@@ -68,8 +76,8 @@ public class GameManager : MonoBehaviour
         resultCanvas.enabled = false;
         blackImg.enabled = false;
         whiteImg.enabled = false;
-        blackCntTxt.text = "";
-        whiteCntTxt.text = "";
+        blackSumCntTxt.text = "";
+        whiteSumCntTxt.text = "";
         blackCnt = 0;
         whiteCnt = 0;
         winnerID = 0;
@@ -83,9 +91,9 @@ public class GameManager : MonoBehaviour
         {
             for (int y = 0; y < 8; ++y)
             {
-                if (boradData)
+                if (othelloData)
                 {
-                    if (boradData.bord[x, y])
+                    if (othelloData.bord[x, y])
                         blackCnt++;
                     else
                         whiteCnt++;
@@ -111,12 +119,12 @@ public class GameManager : MonoBehaviour
             if(b_count < blackCnt)
             {
                 b_count++;
-                blackCntTxt.text = b_count.ToString();               //テキストに入れる
+                blackSumCntTxt.text = b_count.ToString();   
             }
             if(w_count < whiteCnt)
             {
                 w_count++;
-                whiteCntTxt.text = w_count.ToString();                  //テキストに入れる
+                whiteSumCntTxt.text = w_count.ToString();
             }
             if(b_count + w_count >= blackCnt + whiteCnt)
             {
@@ -127,9 +135,41 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2);
         blackImg.enabled = false;
         whiteImg.enabled = false;
-        blackCntTxt.text = "";
-        whiteCntTxt.text = "";
+        blackSumCntTxt.text = "";
+        whiteSumCntTxt.text = "";
         ChangeState(STATE.RESULT);
+        yield break;
+    }
+
+    IEnumerator ShowWinChara()
+    {
+        winCharaImg.sprite = winSprite[winnerID - 1];
+        float time = 0f;
+        float late = 0.2f;
+        while (true)
+        {
+            time += Time.deltaTime;
+            winCharaImg.rectTransform.localScale = new Vector3(0.5f + time / late, 0.5f + time / late, 1f);
+            if (late < time)
+            {
+                winCharaImg.rectTransform.localScale = new Vector3(1.5f, 1.5f, 1);
+                time = 0f;
+                break;
+            }
+            yield return null;
+        }
+        late = 0.1f;
+        while(true)
+        {
+            time += Time.deltaTime;
+            winCharaImg.rectTransform.localScale = new Vector3(1.5f - time / (late * 2), 1.5f - time / (late * 2), 1f);
+            if (late < time)
+            {
+                winCharaImg.rectTransform.localScale = Vector3.one;
+                break;
+            }
+            yield return null;
+        }
         yield break;
     }
 
@@ -153,6 +193,10 @@ public class GameManager : MonoBehaviour
                 break;
             case STATE.END:
                 txtCount.text = "FINISH!";
+                whiteSmallImg.enabled = false;
+                blackSmallImg.enabled = false;
+                whiteTxt.text = "";
+                blackTxt.text = "";
                 Invoke("CountTextInit", 2);
                 break;
             case STATE.RESULT:
@@ -161,7 +205,7 @@ public class GameManager : MonoBehaviour
                 if(winnerID > 0)
                 {
                     winText.text = "Winner!";
-                    winCharaImg.sprite = winSprite[winnerID - 1];
+                    StartCoroutine(ShowWinChara());
                 }
                 else
                 {
@@ -191,6 +235,8 @@ public class GameManager : MonoBehaviour
             case STATE.GAME:
                 currentTime -= Time.deltaTime;
                 txtTime.text = "Time : " + Mathf.CeilToInt(currentTime);
+                //whiteTxt.text = boradData.bord
+                //blackTxt.text = boradData.bord
                 if (0 >= currentTime)
                 {
                     TimeUp();
