@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontback: 1
   pointX: 0
-  pointY: 2
+  pointY: 0
 --- !u!58 &-2439315517925015564
 CircleCollider2D:
   m_ObjectHideFlags: 0
