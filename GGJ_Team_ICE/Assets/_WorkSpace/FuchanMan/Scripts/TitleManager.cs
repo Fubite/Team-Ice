@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 //
 public class TitleManager : MonoBehaviour
 {
-
-
     enum MENU
     {
         NONE,
