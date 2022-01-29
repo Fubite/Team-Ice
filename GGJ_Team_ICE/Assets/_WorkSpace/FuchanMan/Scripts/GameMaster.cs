@@ -11,7 +11,4 @@ public class GameMaster : SingletonMonoBehaviour<GameMaster>
         Run,        //‹S‚²‚Á‚±
     }
     public Rule rule = Rule.Othello;
-    //ŸÒ true:1pWin false:2pwin
-    public bool winner = true;
-
 }

@@ -12,7 +12,6 @@ public class TitleManager : MonoBehaviour
     }
     MENU menu;
 
-
     // Start is called before the first frame update
     void Start()
     {

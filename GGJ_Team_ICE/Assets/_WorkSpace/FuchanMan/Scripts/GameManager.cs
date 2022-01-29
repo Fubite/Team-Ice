@@ -12,18 +12,18 @@ public class GameManager : MonoBehaviour
     float finishTime = 60f;
     float currentTime;
     [SerializeField]
-    Canvas gameCanvas;
+    Canvas gameCanvas = null;
     [SerializeField]
-    Text txtTime;
+    Text txtTime = null;
     [SerializeField]
-    Text txtCount;
+    Text txtCount = null;
     [SerializeField]
-    Canvas resultCanvas;
+    Canvas resultCanvas = null;
     [SerializeField]
     Sprite[] winSprite = new Sprite[2];
     [SerializeField]
-    Image winCharaImg;
-
+    Image winCharaImg = null;
+    //ゲームのステート
     enum STATE
     {
         START,
@@ -31,10 +31,14 @@ public class GameManager : MonoBehaviour
         END,
         RESULT
     }
-
     STATE state;
 
     float elapsed;  //経過時間計測用
+    int blackCnt = 0;   //黒の数
+    int whiteCnt = 0;   //白の数
+
+    //勝者 true:1pWin false:2pwin
+    bool winner = true;
 
     void Start()
     {
@@ -49,6 +53,26 @@ public class GameManager : MonoBehaviour
         gameCanvas.enabled = true;
         resultCanvas.enabled = false;
         ChangeState(STATE.START);
+    }
+
+    //時間切れ
+    void TimeUp()
+    {
+        for(int x = 0; x < 8; ++x)
+        {
+            for(int y = 0; y < 8; ++y)
+            {
+                blackCnt++;
+                whiteCnt++;
+            }
+        }
+        StartCoroutine(CountUp());
+    }
+
+    //個数を数える
+    IEnumerator CountUp()
+    {
+        yield break;
     }
 
     void CountTextInit()
@@ -86,6 +110,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         elapsed += Time.deltaTime;
         switch(state)
         {
