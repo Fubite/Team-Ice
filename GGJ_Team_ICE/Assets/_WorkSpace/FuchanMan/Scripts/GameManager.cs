@@ -1,18 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    Text stateTxt = null;
+    enum STATE
+    {
+        START,
+        GAME,
+        END,
+    }
+    STATE state;
+
+    float elapsed;  //経過時間計測用
+
     void Start()
     {
-        
+        Ready();
+    }
+
+
+    //ゲーム開始時宣言
+    public void Ready()
+    {
+        state = STATE.START;
+        stateTxt.text = "START";
+        elapsed = 0.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        elapsed += Time.deltaTime;
+        switch(state)
+        {
+            case STATE.START:
+                if(elapsed > 2f)
+                {
+                    state = STATE.GAME;
+                    stateTxt.text = "GAME";
+                    elapsed = 0f;
+                }
+                break;
+            case STATE.GAME:
+                if (elapsed > 2f)
+                {
+                    state = STATE.GAME;
+                    stateTxt.text = "END";
+                    elapsed = 0f;
+                }
+                break;
+            case STATE.END:
+                if(Input.GetButton(""))
+                {
+
+                }
+                break;
+        }
     }
 }
