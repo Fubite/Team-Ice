@@ -13,7 +13,10 @@ public class Othellodata :Boraddata
     }
     public void Update()
     {
-        frontback = get(pointX, pointY);
+        Debug.Log(omoteura[pointX, pointY]);
+        if(Input.GetKeyDown(KeyCode.Space)){
+            reverse();
+        }
     }
     public void reverse()//Ç–Ç¡Ç≠ÇËï‘Ç∑ä÷êî
     {
@@ -22,11 +25,13 @@ public class Othellodata :Boraddata
         {
             data.color = Color.white;
             omoteura[pointX, pointY] = false;
+            frontback = false;
         }
         else
         {
             data.color = Color.black;
             omoteura[pointX, pointY] = true;
+            frontback = true;
         }
         ReverseAll(pointX, pointY);
     }

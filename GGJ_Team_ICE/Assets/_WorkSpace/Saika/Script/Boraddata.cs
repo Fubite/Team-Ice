@@ -6,13 +6,18 @@ public class Boraddata:MonoBehaviour
 {
     public bool[,] omoteura =new bool[8,8];//そのマスにあるオセロの裏表
     public Transform[,] mass = new Transform[8,8];//一マスごとの座標
-    public bool get(int x,int y)
-    {
-        return omoteura[x,y];
-    }
+    //public bool get(int x,int y)
+    //{
+    //    return omoteura[x,y];
+    //}
     public void set(int x,int y,bool frontback)
     {
         this.omoteura[x, y] = frontback;
+        Debug.Log(x+","+y+"("+omoteura[x, y]+")");
+    }
+    private void Update()
+    {
+        Debug.Log(getcount(true));
     }
 
     void Reverse(int h, int v, int directionH, int directionV)
@@ -55,9 +60,9 @@ public class Boraddata:MonoBehaviour
     public int getcount(bool boolean)//入れた引数の数を数える関数　制限時間終了時の集計用
     {
         int x = 0;
-        for (int i = 0; i < omoteura.Length; i++)
+        for (int i = 0; i < 8; i++)
         {
-            for (int j = 0; j < omoteura.Length; j++)
+            for (int j = 0; j < 8; j++)
             {
                 if (omoteura[i, j] == boolean)
                 {
