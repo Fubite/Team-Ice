@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Othellodata :Boraddata
 {
-    [Header("true=•")] public bool frontback = true;
+    [Header("true=•")] public bool frontback = true;//‚±‚ÌƒIƒZƒ‚Ì•\— 
     SpriteRenderer data;
     public int pointX,pointY;
-    public void reverse()
+    public void reverse()//‚Ğ‚Á‚­‚è•Ô‚·ˆ—
     {
         data = GetComponent<SpriteRenderer>();
         if (frontback)
