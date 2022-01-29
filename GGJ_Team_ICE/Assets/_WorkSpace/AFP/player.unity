@@ -579,7 +579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p_num: 2
-  move_power: 0.1
+  move_power: 1.3
   anim: {fileID: 1669720585}
   board: {fileID: 496228693}
   move_stop: 0
@@ -642,8 +642,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1669720584}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.776781, y: 5.857962, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -809,8 +809,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1862564669}
   - component: {fileID: 1862564668}
-  - component: {fileID: 1862564667}
   - component: {fileID: 1862564670}
+  - component: {fileID: 1862564667}
   m_Layer: 0
   m_Name: player1
   m_TagString: Untagged
@@ -831,7 +831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p_num: 1
-  move_power: 0.1
+  move_power: 1.3
   anim: {fileID: 1862564670}
   board: {fileID: 496228693}
   move_stop: 0
@@ -894,8 +894,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862564666}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.3232188, y: -3.2420382, z: 0.6996095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
