@@ -3,35 +3,84 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//debug
-using UnityEngine.SceneManagement;
-//
 public class GameManager : MonoBehaviour
 {
+    //ゲームのルール
+    GameMaster.Rule rule;
+
+    [SerializeField, Header("制限時間")]
+    float finishTime = 60f;
+    float currentTime;
     [SerializeField]
-    Text stateTxt = null;
+    Canvas gameCanvas;
+    [SerializeField]
+    Text txtTime;
+    [SerializeField]
+    Text txtCount;
+    [SerializeField]
+    Canvas resultCanvas;
+    [SerializeField]
+    Sprite[] winSprite = new Sprite[2];
+    [SerializeField]
+    Image winCharaImg;
+
     enum STATE
     {
         START,
         GAME,
         END,
+        RESULT
     }
+
     STATE state;
 
     float elapsed;  //経過時間計測用
 
     void Start()
     {
-        Ready();
+        rule = GameMaster.Instance.rule;
+        Ready(rule);
     }
 
 
     //ゲーム開始時宣言
-    public void Ready()
+    public void Ready(GameMaster.Rule _rule)
     {
-        state = STATE.START;
-        stateTxt.text = "START";
-        elapsed = 0.0f;
+        gameCanvas.enabled = true;
+        resultCanvas.enabled = false;
+        ChangeState(STATE.START);
+    }
+
+    void CountTextInit()
+    {
+        txtCount.text = "";
+    }
+
+    void ChangeState(STATE _state)
+    {
+        switch (_state)
+        {
+            case STATE.START:
+                txtCount.text = "3";
+                currentTime = finishTime;
+                txtTime.text = "Time : " + Mathf.CeilToInt(currentTime);
+                break;
+            case STATE.GAME:
+                txtCount.text = "START!";
+                Invoke("CountTextInit", 1);
+                break;
+            case STATE.END:
+                txtCount.text = "FINISH!";
+                Invoke("CountTextInit", 2);
+                break;
+            case STATE.RESULT:
+                gameCanvas.enabled = false;
+                resultCanvas.enabled = true;
+                winCharaImg.sprite = winSprite[0];
+                break;
+        }
+        elapsed = 0f;
+        state = _state;
     }
 
     // Update is called once per frame
@@ -41,25 +90,30 @@ public class GameManager : MonoBehaviour
         switch(state)
         {
             case STATE.START:
-                if(elapsed > 2f)
+                txtCount.text = (Mathf.FloorToInt(3 - elapsed) + 1).ToString();
+                if(elapsed >= 3f)
                 {
-                    state = STATE.GAME;
-                    stateTxt.text = "GAME";
-                    elapsed = 0f;
+                    ChangeState(STATE.GAME);
                 }
                 break;
             case STATE.GAME:
-                if (elapsed > 2f)
+                currentTime -= Time.deltaTime;
+                txtTime.text = "Time : " + Mathf.CeilToInt(currentTime);
+                if (0 >= currentTime)
                 {
-                    state = STATE.END;
-                    stateTxt.text = "END";
-                    elapsed = 0f;
+                    ChangeState(STATE.END);
                 }
                 break;
             case STATE.END:
-                if(Input.GetButton("Submit"))
+                if(elapsed > 2f)
                 {
-                    SceneManager.LoadScene("TestResult");   
+                    ChangeState(STATE.RESULT);
+                }
+                break;
+            case STATE.RESULT:
+                if(Input.GetButtonDown("Submit"))
+                {
+                    SimpleFadeManager.Instance.FadeSceneChange("TestTitle");
                 }
                 break;
         }

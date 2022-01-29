@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class GameMaster : SingletonMonoBehaviour<GameMaster>
 {
+    public enum Rule
+    {
+        Othello,    //“ü‚ê‘Ö‚¦Ÿ•‰
+        Buttle,     //‘Šè‚ğ“ü‚ê‘Ö‚¦‚½•û‚ªŸ‚¿
+        Run,        //‹S‚²‚Á‚±
+    }
+    public Rule rule = Rule.Othello;
+    //ŸÒ true:1pWin false:2pwin
     public bool winner = true;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

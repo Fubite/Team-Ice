@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Othellodata : MonoBehaviour
 {
-    [Header("true=çï")] bool frontback = true;
-    // Update is called once per frame
-    void Update()
+    [Header("true=çï")] public bool frontback = true;
+    public int pointX,pointY;
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -17,13 +17,18 @@ public class Othellodata : MonoBehaviour
     {
         if (frontback)
         {
-            transform.Rotate(180, 0, 0);
+            transform.Rotate(new Vector3(180, 0, 0));
             frontback = false;
         }
         else
         {
-            transform.Rotate(-180, 0, 0);
+            transform.Rotate(new Vector3(-180, 0, 0));
             frontback = true;
         }
+    }
+    public void instance(int x,int y)
+    {
+        pointX = x;
+        pointY = y;
     }
 }
