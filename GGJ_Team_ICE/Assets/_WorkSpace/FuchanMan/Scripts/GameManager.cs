@@ -5,8 +5,13 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    //ゲームのルール
-    GameMaster.Rule rule;
+    [SerializeField,Header("ボードデータ")]
+    Boraddata boradData = null;
+
+    [SerializeField]
+    player w_player;    //白プレイヤー
+    [SerializeField]
+    player b_player;    //黒プレイヤー
 
     [SerializeField, Header("制限時間")]
     float finishTime = 60f;
@@ -18,11 +23,21 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Text txtCount = null;
     [SerializeField]
+    Image blackImg = null; 
+    [SerializeField]
+    Text blackCntTxt = null;
+    [SerializeField]
+    Image whiteImg = null;
+    [SerializeField]
+    Text whiteCntTxt = null;
+    [SerializeField]
     Canvas resultCanvas = null;
     [SerializeField]
     Sprite[] winSprite = new Sprite[2];
     [SerializeField]
     Image winCharaImg = null;
+    [SerializeField]
+    Text winText = null;
     //ゲームのステート
     enum STATE
     {
@@ -37,41 +52,84 @@ public class GameManager : MonoBehaviour
     int blackCnt = 0;   //黒の数
     int whiteCnt = 0;   //白の数
 
-    //勝者 true:1pWin false:2pwin
-    bool winner = true;
+    //勝者 0:引き分け 1:1pWin 2:2pwin
+    int winnerID = 0;
 
     void Start()
     {
-        rule = GameMaster.Instance.rule;
-        Ready(rule);
+        Ready();
     }
 
 
     //ゲーム開始時宣言
-    public void Ready(GameMaster.Rule _rule)
+    public void Ready()
     {
         gameCanvas.enabled = true;
         resultCanvas.enabled = false;
+        blackImg.enabled = false;
+        whiteImg.enabled = false;
+        blackCntTxt.text = "";
+        whiteCntTxt.text = "";
+        blackCnt = 0;
+        whiteCnt = 0;
+        winnerID = 0;
         ChangeState(STATE.START);
     }
 
     //時間切れ
     void TimeUp()
     {
-        for(int x = 0; x < 8; ++x)
+        for (int x = 0; x < 8; ++x)
         {
-            for(int y = 0; y < 8; ++y)
+            for (int y = 0; y < 8; ++y)
             {
-                blackCnt++;
-                whiteCnt++;
+                if (boradData)
+                {
+                    if (boradData.bord[x, y])
+                        blackCnt++;
+                    else
+                        whiteCnt++;
+                }
             }
         }
+        blackCnt = 30;
+        whiteCnt = 20;
+        winnerID = whiteCnt > blackCnt ? 2 : blackCnt > whiteCnt ? 1 : 0; 
         StartCoroutine(CountUp());
     }
 
     //個数を数える
     IEnumerator CountUp()
     {
+        yield return new WaitForSeconds(2);
+        blackImg.enabled = true;
+        whiteImg.enabled = true;
+        int b_count = 0;
+        int w_count = 0;
+        while(true)
+        {
+            if(b_count < blackCnt)
+            {
+                b_count++;
+                blackCntTxt.text = b_count.ToString();               //テキストに入れる
+            }
+            if(w_count < whiteCnt)
+            {
+                w_count++;
+                whiteCntTxt.text = w_count.ToString();                  //テキストに入れる
+            }
+            if(b_count + w_count >= blackCnt + whiteCnt)
+            {
+                break;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        yield return new WaitForSeconds(2);
+        blackImg.enabled = false;
+        whiteImg.enabled = false;
+        blackCntTxt.text = "";
+        whiteCntTxt.text = "";
+        ChangeState(STATE.RESULT);
         yield break;
     }
 
@@ -100,7 +158,17 @@ public class GameManager : MonoBehaviour
             case STATE.RESULT:
                 gameCanvas.enabled = false;
                 resultCanvas.enabled = true;
-                winCharaImg.sprite = winSprite[0];
+                if(winnerID > 0)
+                {
+                    winText.text = "Winner!";
+                    winCharaImg.sprite = winSprite[winnerID - 1];
+                }
+                else
+                {
+                    //引き分け
+                    winText.text = "Draw";
+                    winCharaImg.color = Color.clear;
+                }
                 break;
         }
         elapsed = 0f;
@@ -110,7 +178,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         elapsed += Time.deltaTime;
         switch(state)
         {
@@ -126,13 +193,21 @@ public class GameManager : MonoBehaviour
                 txtTime.text = "Time : " + Mathf.CeilToInt(currentTime);
                 if (0 >= currentTime)
                 {
+                    TimeUp();
                     ChangeState(STATE.END);
                 }
                 break;
             case STATE.END:
-                if(elapsed > 2f)
+                if(0 >= currentTime)
                 {
-                    ChangeState(STATE.RESULT);
+
+                }
+                else
+                {
+                    if (elapsed >= 2f)
+                    {
+                        ChangeState(STATE.RESULT);
+                    }
                 }
                 break;
             case STATE.RESULT:
