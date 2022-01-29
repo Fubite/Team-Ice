@@ -14,7 +14,7 @@ public class player : MonoBehaviour
     public Animator anim;
 
     [SerializeField, Header("オセロ2D入れる")]
-    public GameObject board;
+    public Boraddata board;
 
     [Header("主人公の操作できるかを管理")]
     public bool move_stop = false;
@@ -51,7 +51,14 @@ public class player : MonoBehaviour
             masu_check = true;
             x = 7; y = 7;
         }
+        //boardデータの取得
+        masu = board.omoteura;
 
+        Debug.Log("" + masu[x, 7 - y]);
+        for (int i = 0; i < 8; i++)
+        {
+            Debug.Log(i + ":" + board.omoteura[0, i]);
+        }
     }
 
     private void Move()
@@ -85,10 +92,14 @@ public class player : MonoBehaviour
         Vector2 input_abs = new Vector2(Mathf.Abs(Input.GetAxis("HorizontalL_P" + p_num)), Mathf.Abs(Input.GetAxis("VerticalL_P" + p_num)));
         Vector2 input= new Vector2(Input.GetAxis("HorizontalL_P" + p_num), Input.GetAxis("VerticalL_P" + p_num));
 
-        //boardデータの取得
-        masu = board.GetComponent<Boraddata>().omoteura;
+        ////boardデータの取得
+        //masu = board.omoteura;
 
-        Debug.Log("" + masu[x, 7 - y]);
+        //Debug.Log("" + masu[x, 7 - y]);
+        //for(int i=0;i<8;i++)
+        //{
+        //    Debug.Log(i+":" + board.omoteura[0, i]);
+        //}
 
         //スタート、終了時動かせない
         if (!move_stop)
@@ -103,7 +114,7 @@ public class player : MonoBehaviour
                     if (-input.y > 0 && y < 7)
                     {
                         //上に何もない時且つ、自分とは違う色の場合
-                        if (y != 7 && masu[x, 7 - y - 1] == true) 
+                        if (y != 7 && masu[x, 7 - y - 1] == masu_check) 
                         {
                             startPos = transform.position;
                             endPos = transform.position + new Vector3(0, move_power, 0);
@@ -111,7 +122,7 @@ public class player : MonoBehaviour
                             anim.SetBool("up", true);
                             y++;
                         }
-                        board.GetComponent<Boraddata>().omoteura[2,2 ] = false;
+                        //board.GetComponent<Boraddata>().omoteura[2,2 ] = false;
 
                         anim.SetFloat("idleDir" + p_num, 0);
                         direction = 0;
@@ -120,7 +131,7 @@ public class player : MonoBehaviour
                     else if (-input.y < 0 && y > 0)
                     {
                         //上にが自分とは違う色の場合
-                        if (y != 0 && masu[x, 7 - y + 1] == true) 
+                        if (y != 0 && masu[x, 7 - y + 1] == masu_check) 
                         {
                             startPos = transform.position;
                             endPos = transform.position + new Vector3(0, -move_power, 0);
@@ -139,7 +150,7 @@ public class player : MonoBehaviour
                     if (input.x > 0 && x < 7)
                     {
                         //上にが自分とは違う色の場合
-                        if (x != 7 && masu[x + 1, 7 - y] == true) 
+                        if (x != 7 && masu[x + 1, 7 - y] == masu_check) 
                         {
                             startPos = transform.position;
                             endPos = transform.position + new Vector3(move_power, 0, 0);
@@ -154,7 +165,7 @@ public class player : MonoBehaviour
                     else if (input.x < 0 && x > 0)
                     {
                         //上にが自分とは違う色の場合
-                        if (x != 0 && masu[x - 1, 7 - y] == true) 
+                        if (x != 0 && masu[x - 1, 7 - y] == masu_check) 
                         {
                             startPos = transform.position;
                             endPos = transform.position + new Vector3(-move_power, 0, 0);
