@@ -239,6 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p_num: 1
   move_power: 0.1
+  anim: {fileID: 1862564670}
   move_stop: 0
   moveTime: 0.5
 --- !u!212 &1862564668

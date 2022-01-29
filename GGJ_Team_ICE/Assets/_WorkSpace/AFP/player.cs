@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class player : MonoBehaviour
 {
-    [Header("プレイヤー番号")]
-    public int p_num;
+    [SerializeField, Header("プレイヤー番号")]
+    int p_num;
 
-    [Header("プレイヤーの移動力")]
-    public float move_power;
+    [SerializeField, Header("プレイヤーの移動力")]
+    float move_power;
+
+    [SerializeField, Header("主人公アニメーション")]
+    public Animator anim;
 
     [Header("主人公の操作できるかを管理")]
     public bool move_stop = false;
@@ -44,6 +47,8 @@ public class player : MonoBehaviour
             transform.position = endPos;
             isMove = false;
             elapsed = 0f;
+
+            anim.SetBool("down", false);
         }
     }
 
@@ -76,6 +81,7 @@ public class player : MonoBehaviour
                     {
                         startPos = transform.position;
                         endPos = transform.position + new Vector3(0, -1, 0);
+                        anim.SetBool("down", true); Debug.Log("bbb");
                         isMove = true;
                     }
                 }
