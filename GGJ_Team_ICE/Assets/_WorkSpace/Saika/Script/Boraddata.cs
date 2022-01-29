@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Boraddata:MonoBehaviour
 {
-    public bool[,] omoteura =new bool[8,8];//乗ってるオセロの表裏
+    public bool[,] omoteura =new bool[8,8];//そのマスにあるオセロの裏表
     public Transform[,] mass = new Transform[8,8];//一マスごとの座標
     public bool get(int x,int y)
     {

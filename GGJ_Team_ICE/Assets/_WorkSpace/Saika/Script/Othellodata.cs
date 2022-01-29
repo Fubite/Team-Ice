@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Othellodata :Boraddata
 {
-    [Header("true=黒")] public bool frontback = true;//このオセロの表裏
+    [Header("true=黒")] public bool frontback = true;//このオセロの裏表
     SpriteRenderer data;
     public int pointX,pointY;
-    public void reverse()//ひっくり返す処理
+    public void reverse()//ひっくり返す関数
     {
         data = GetComponent<SpriteRenderer>();
         if (frontback)

@@ -13,7 +13,7 @@ public class Autoplacement : MonoBehaviour
     {
         placment();
     }
-    public void placment()
+    public void placment()//自動配置
     {
         for(int i = 0; i < 64; i++)
         {
@@ -42,17 +42,6 @@ public class Autoplacement : MonoBehaviour
                 count[1]++;
             }
             boraddata.set(i / 8, i % 8, pack.frontback);
-        }
-        Debug.Log("黒：" + count[1] + "白：" + count[0]);
-        for(int i = 0; i < 64; i++)
-        {if (boraddata.get(i / 8, i % 8) == true)
-            {
-                Debug.Log(i+":"+1);
-            }
-            else
-            {
-                Debug.Log(i+":"+0);
-            }
         }
     }
 }
