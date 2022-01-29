@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//debug
-using UnityEngine.SceneManagement;
-//
 public class GameManager : MonoBehaviour
 {
+    //ゲームのルール
+    GameMaster.Rule rule;
+
+    [SerializeField, Header("制限時間")]
+    float finishTime = 60f;
+    float currentTime;
+    [SerializeField]
+    Text txtTime;
+
     [SerializeField]
     Text stateTxt = null;
     enum STATE
@@ -16,21 +22,24 @@ public class GameManager : MonoBehaviour
         GAME,
         END,
     }
+
     STATE state;
 
     float elapsed;  //経過時間計測用
 
     void Start()
     {
-        Ready();
+        rule = GameMaster.Instance.rule;
+        Ready(rule);
     }
 
 
     //ゲーム開始時宣言
-    public void Ready()
+    public void Ready(GameMaster.Rule _rule)
     {
         state = STATE.START;
         stateTxt.text = "START";
+        currentTime = finishTime;
         elapsed = 0.0f;
     }
 
@@ -49,7 +58,8 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case STATE.GAME:
-                if (elapsed > 2f)
+                currentTime -= Time.deltaTime;
+                if (0 >= currentTime)
                 {
                     state = STATE.END;
                     stateTxt.text = "END";
@@ -59,7 +69,7 @@ public class GameManager : MonoBehaviour
             case STATE.END:
                 if(Input.GetButton("Submit"))
                 {
-                    SceneManager.LoadScene("TestResult");   
+                    SimpleFadeManager.Instance.FadeSceneChange("TestResult");   
                 }
                 break;
         }
