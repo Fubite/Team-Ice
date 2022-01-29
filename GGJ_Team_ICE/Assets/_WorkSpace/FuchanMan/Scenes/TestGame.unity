@@ -895,7 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac0b28ddd8e73d4a97b6b509c94723e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finishTime: 5
+  finishTime: 60
   gameCanvas: {fileID: 1178800200}
   txtTime: {fileID: 272380927}
   txtCount: {fileID: 1746786338}
@@ -916,7 +916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcb7a8e47c6f7b498696e00f15fc291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  othelloPrefab: {fileID: 0}
+  othelloPrefab: {fileID: 2704088638383072133, guid: f7d939279eabd094984c717ace2362f1, type: 3}
 --- !u!1 &1746786336
 GameObject:
   m_ObjectHideFlags: 0
