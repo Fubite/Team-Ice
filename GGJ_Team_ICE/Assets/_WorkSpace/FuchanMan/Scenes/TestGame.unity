@@ -810,6 +810,7 @@ GameObject:
   - component: {fileID: 1737195793}
   - component: {fileID: 1737195792}
   - component: {fileID: 1737195795}
+  - component: {fileID: 1737195796}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -903,6 +904,19 @@ MonoBehaviour:
   - {fileID: -6656958086601750620, guid: 7725599e5d375db4c98c5d5250ac6d98, type: 3}
   - {fileID: 8369043560249748229, guid: 7725599e5d375db4c98c5d5250ac6d98, type: 3}
   winCharaImg: {fileID: 1331775048}
+--- !u!114 &1737195796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737195791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdcb7a8e47c6f7b498696e00f15fc291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  othelloPrefab: {fileID: 0}
 --- !u!1 &1746786336
 GameObject:
   m_ObjectHideFlags: 0
