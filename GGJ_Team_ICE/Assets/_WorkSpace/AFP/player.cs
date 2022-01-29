@@ -16,8 +16,11 @@ public class player : MonoBehaviour
     [SerializeField, Header("オセロ2D入れる")]
     public Boraddata board;
 
-    [Header("主人公の操作できるかを管理")]
+    [Header("(public)主人公の操作できるかを管理")]
     public bool move_stop = false;
+
+    [Header("(public)主人公が死ぬとtrueになる")]
+    public bool deth = false;
 
     private Vector3 p_vec = new Vector3(0, 0, 0);           //主人公へ代入用ベクトル
     bool isMove = false; 
@@ -92,14 +95,14 @@ public class player : MonoBehaviour
         Vector2 input_abs = new Vector2(Mathf.Abs(Input.GetAxis("HorizontalL_P" + p_num)), Mathf.Abs(Input.GetAxis("VerticalL_P" + p_num)));
         Vector2 input= new Vector2(Input.GetAxis("HorizontalL_P" + p_num), Input.GetAxis("VerticalL_P" + p_num));
 
-        ////boardデータの取得
-        //masu = board.omoteura;
+        //boardデータの取得
+        masu = board.get(8,8);
 
-        //Debug.Log("" + masu[x, 7 - y]);
-        //for(int i=0;i<8;i++)
-        //{
-        //    Debug.Log(i+":" + board.omoteura[0, i]);
-        //}
+        Debug.Log("" + masu[x, 7 - y]);
+        for (int i = 0; i < 8; i++)
+        {
+            Debug.Log(i + ":" + board.get(8, 8)[0, i]);
+        }
 
         //スタート、終了時動かせない
         if (!move_stop)
