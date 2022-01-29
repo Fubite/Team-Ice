@@ -6,13 +6,13 @@ public class Boraddata:MonoBehaviour
 {
     public bool[,] omoteura =new bool[8,8];//そのマスにあるオセロの裏表
     public Transform[,] mass = new Transform[8,8];//一マスごとの座標
-    //public bool get(int x,int y)
-    //{
-    //    return omoteura[x,y];
-    //}
+    public bool[,] get(int x, int y)
+    {
+        return omoteura;
+    }
     public void set(int x,int y,bool frontback)
     {
-        this.omoteura[x, y] = frontback;
+        omoteura[x, y] = frontback;
         Debug.Log(x+","+y+"("+omoteura[x, y]+")");
     }
     private void Update()

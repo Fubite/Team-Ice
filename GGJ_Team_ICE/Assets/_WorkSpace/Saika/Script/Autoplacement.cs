@@ -19,19 +19,19 @@ public class Autoplacement : MonoBehaviour
         {
             othello.mass[i / 8, i % 8] = gameboard[i].transform;
             Othellodata pack = Instantiate(othello, gameboard[i].transform.position,transform.rotation);
-            pack.instance(i / 8, i % 8);
+            pack.instance(i / 8, i % 8,true);
             //ÇVç∂â∫Å@ÇTÇWâEè„
             if (i == 7)
             {
                 pack.reverse();
                 count[0]++;
-                othello.set(i / 8, i % 8, false);
+                //othello.set(i / 8, i % 8, false);
                 continue;
             }
             if (i == 58)
             {
                 count[1]++; 
-                othello.set(i / 8, i % 8,true);
+                //othello.set(i / 8, i % 8,true);
                 continue;
             }
             if (Random.Range(0, 999) % 3 <= 1 && count[0] < gameboard.Length / 2)
@@ -39,12 +39,12 @@ public class Autoplacement : MonoBehaviour
                 pack.reverse();
                 pack.frontback = false;
                 count[0]++;//îí
-                othello.set(i / 8, i % 8, false);
+                //othello.set(i / 8, i % 8, false);
             }
             else
             {
                 count[1]++;
-                othello.set(i / 8, i % 8, true);
+                //othello.set(i / 8, i % 8, true);
             }
             //boraddata.set(i / 8, i % 8, pack.frontback);
         }
