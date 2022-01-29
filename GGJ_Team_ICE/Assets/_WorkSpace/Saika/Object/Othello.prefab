@@ -201,7 +201,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4889199386434681887}
-  - component: {fileID: -6252857038723374650}
   m_Layer: 0
   m_Name: Othello
   m_TagString: Untagged
@@ -225,18 +224,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6252857038723374650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5268930466802626547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ddc780e67aed2942b591c6e076a4cfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frontback: 1
-  pointX: 0
-  pointY: 0
