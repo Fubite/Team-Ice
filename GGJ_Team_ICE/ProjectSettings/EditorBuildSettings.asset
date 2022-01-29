@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_WorkSpace/FuchanMan/Scenes/TestTitle.unity
+    guid: d5c6589c0d6768142af9e09b7d0359a4
+  - enabled: 1
+    path: Assets/_WorkSpace/FuchanMan/Scenes/TestGame.unity
+    guid: 443544d4dd1cbb049891bf9406696986
+  - enabled: 1
+    path: Assets/_WorkSpace/FuchanMan/Scenes/TestResult.unity
+    guid: d2360399b94c7f944806efb63372ccc9
   m_configObjects: {}

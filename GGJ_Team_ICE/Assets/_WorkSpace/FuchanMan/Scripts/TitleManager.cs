@@ -19,18 +19,19 @@ public class TitleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        menu = MENU.START;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButton("Fire1"))
+        if(Input.GetButtonDown("Submit"))
         {
             switch(menu)
             {
                 case MENU.START:
-                    SceneManager.LoadScene("Game");
+                    SimpleFadeManager.Instance.FadeSceneChange("TestGame");
+                    //SceneManager.LoadScene("TestGame");
                     break;
 
                 case MENU.END:
