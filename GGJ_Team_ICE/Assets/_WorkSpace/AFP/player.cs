@@ -33,7 +33,7 @@ public class player : MonoBehaviour
 
     private bool[,] masu = new bool[8, 8];
 
-    int x=2,y = 2;
+    private int x=0,y = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -50,9 +50,6 @@ public class player : MonoBehaviour
 
     private void Move()
     {
-        //masu = board.GetComponent<Boraddata>().bord;
-
-
         elapsed += Time.deltaTime;
         float t = elapsed / moveTime;
 
@@ -82,23 +79,24 @@ public class player : MonoBehaviour
         Vector2 input_abs = new Vector2(Mathf.Abs(Input.GetAxis("HorizontalL_P" + p_num)), Mathf.Abs(Input.GetAxis("VerticalL_P" + p_num)));
         Vector2 input= new Vector2(Input.GetAxis("HorizontalL_P" + p_num), Input.GetAxis("VerticalL_P" + p_num));
 
-        Debug.Log("" + board.GetComponent<Boraddata>().bord[1, 1]);
+        //boardデータの取得
+        masu = board.GetComponent<Boraddata>().bord;
+
+        Debug.Log("" + masu[x, 7 - y]);
+
         //スタート、終了時動かせない
         if (!move_stop)
         {
-            Debug.Log(x + ":" + y);
-            //盤面外はいけない
-            if (x > 0 && x < 7 && y > 0 && y < 7)
+            //移動処理
+            if (!isMove)
             {
-                //移動処理
-                if (!isMove)
+                //上下優先処理
+                if (input_abs.x < input_abs.y)
                 {
-                    //上下優先処理
-                    if (input_abs.x < input_abs.y)
+                    if (-input.y > 0 && y < 7)//上移動処理
                     {
                         //上にが自分とは違う色の場合
-                        //if(y-1==kuro)
-                        if (-input.y > 0)//上移動処理
+                        if (masu[x, 7 - y - 1] == true)
                         {
                             startPos = transform.position;
                             endPos = transform.position + new Vector3(0, 1, 0);
@@ -106,8 +104,14 @@ public class player : MonoBehaviour
                             anim.SetBool("up", true);
                             anim.SetFloat("idleDir" + p_num, 0);
                             direction = 0;
+                            y++;
                         }
-                        else if (-input.y < 0)//下移動処理
+                        
+                    }
+                    else if (-input.y < 0 && y > 0)//下移動処理
+                    {
+                        //上にが自分とは違う色の場合
+                        if (masu[x, 7 - y + 1] == true)
                         {
                             startPos = transform.position;
                             endPos = transform.position + new Vector3(0, -1, 0);
@@ -115,11 +119,16 @@ public class player : MonoBehaviour
                             anim.SetBool("down", true);
                             anim.SetFloat("idleDir" + p_num, 1);
                             direction = 1;
+                            y--;
                         }
                     }
-                    else//左右優先処理
+                }
+                else//左右優先処理
+                {
+                    if (input.x > 0 && x < 7)//右優先処理
                     {
-                        if (input.x > 0)//右優先処理
+                        //上にが自分とは違う色の場合
+                        if (masu[x - 1, 7 - y] == true)
                         {
                             startPos = transform.position;
                             endPos = transform.position + new Vector3(1, 0, 0);
@@ -127,8 +136,13 @@ public class player : MonoBehaviour
                             anim.SetBool("right", true);
                             anim.SetFloat("idleDir" + p_num, 2);
                             direction = 2;
+                            x++;
                         }
-                        else if (input.x < 0)//左優先処理
+                    }
+                    else if (input.x < 0 && x > 0)//左優先処理
+                    {
+                        //上にが自分とは違う色の場合
+                        if (masu[x + 1, 7 - y] == true)
                         {
                             startPos = transform.position;
                             endPos = transform.position + new Vector3(-1, 0, 0);
@@ -136,18 +150,23 @@ public class player : MonoBehaviour
                             anim.SetBool("left", true);
                             anim.SetFloat("idleDir" + p_num, 3);
                             direction = 3;
+                            x--;
                         }
                     }
                 }
-                else
-                {
-                    Move();
-                }
+            }
+            else
+            {
+                Move();
             }
 
 
-            //ひっくり返す処理
 
+            //ひっくり返す処理
+            if(direction==0)
+            {
+
+            }
 
 
         }
