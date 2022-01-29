@@ -2,43 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Othellodata :Boraddata
+public class Othellodata
 {
-    [Header("true=黒")] public bool frontback = true;//このオセロの裏表
-    SpriteRenderer data;
-    public int pointX,pointY;
-    private void Start()
+    [Header("true=黒")] public bool frontback;//このオセロの裏表
+    GameObject Object;
+    SpriteRenderer spriteRenderer;
+    public Othellodata(GameObject gameobject,bool boolean)
     {
-        data = GetComponent<SpriteRenderer>();
-    }
-    public void Update()
-    {
-        Debug.Log(omoteura[pointX, pointY]);
-        if(Input.GetKeyDown(KeyCode.Space)){
-            reverse();
-        }
+        this.Object = gameobject;
+        this.frontback = boolean;
+        spriteRenderer = this.Object.GetComponent<SpriteRenderer>();
     }
     public void reverse()//ひっくり返す関数
     {
-        data = GetComponent<SpriteRenderer>();
         if (frontback)
         {
-            data.color = Color.white;
-            omoteura[pointX, pointY] = false;
             frontback = false;
+            spriteRenderer.color = Color.white;
         }
         else
         {
-            data.color = Color.black;
-            omoteura[pointX, pointY] = true;
             frontback = true;
+            spriteRenderer.color = Color.black;
         }
-        ReverseAll(pointX, pointY);
-    }
-    public void instance(int x,int y,bool boolean)
-    {
-        pointX = x;
-        pointY = y;
-        set(x, y, boolean);
     }
 }
