@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Autoplacement : MonoBehaviour
 {
-    [SerializeField] Boraddata boraddata;
+    //[SerializeField] Boraddata boraddata;
     [SerializeField] Othellodata othello;
     [SerializeField] GameObject[] gameboard=new GameObject[64];
     int[] count = new int[2];
@@ -17,7 +17,7 @@ public class Autoplacement : MonoBehaviour
     {
         for(int i = 0; i < 64; i++)
         {
-            boraddata.mass[i / 8, i % 8] = gameboard[i].transform;
+            othello.mass[i / 8, i % 8] = gameboard[i].transform;
             Othellodata pack = Instantiate(othello, gameboard[i].transform.position,transform.rotation);
             pack.instance(i / 8, i % 8);
             //‚V¶‰º@‚T‚W‰Eã
@@ -25,23 +25,28 @@ public class Autoplacement : MonoBehaviour
             {
                 pack.reverse();
                 count[0]++;
+                othello.set(i / 8, i % 8, false);
                 continue;
             }
             if (i == 58)
             {
-                count[1]++;
+                count[1]++; 
+                othello.set(i / 8, i % 8,true);
                 continue;
             }
             if (Random.Range(0, 999) % 3 <= 1 && count[0] < gameboard.Length / 2)
             {
                 pack.reverse();
+                pack.frontback = false;
                 count[0]++;//”’
+                othello.set(i / 8, i % 8, false);
             }
             else
             {
                 count[1]++;
+                othello.set(i / 8, i % 8, true);
             }
-            boraddata.set(i / 8, i % 8, pack.frontback);
+            //boraddata.set(i / 8, i % 8, pack.frontback);
         }
     }
 }
