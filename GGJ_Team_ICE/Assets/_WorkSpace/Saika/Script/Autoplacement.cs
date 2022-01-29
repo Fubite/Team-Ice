@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Autoplacement : MonoBehaviour
 {
+    [SerializeField] Boraddata boraddata;
     [SerializeField] Othellodata othello;
     [SerializeField] GameObject[] gameboard=new GameObject[64];
     int[] count = new int[2];
@@ -14,9 +15,10 @@ public class Autoplacement : MonoBehaviour
     }
     public void placment()
     {
-        for(int i = 0; i < gameboard.Length; i++)
+        for(int i = 0; i < 64; i++)
         {
-            Othellodata pack= Instantiate(othello,gameboard[i].transform.position+new Vector3(0,1,0), transform.rotation);
+            boraddata.mass[i / 8, i % 8] = gameboard[i].transform;
+            Othellodata pack = Instantiate(othello, gameboard[i].transform.position,transform.rotation);
             pack.instance(i / 8, i % 8);
             //‚V¶‰º@‚T‚W‰Eã
             if (i == 7)
@@ -30,7 +32,7 @@ public class Autoplacement : MonoBehaviour
                 count[1]++;
                 continue;
             }
-            if (Random.Range(0, 999)%3 <= 1&&count[0]<gameboard.Length/2)
+            if (Random.Range(0, 999) % 3 <= 1 && count[0] < gameboard.Length / 2)
             {
                 pack.reverse();
                 count[0]++;//”’
@@ -39,7 +41,18 @@ public class Autoplacement : MonoBehaviour
             {
                 count[1]++;
             }
+            boraddata.set(i / 8, i % 8, pack.frontback);
         }
         Debug.Log("•F" + count[1] + "”’F" + count[0]);
+        for(int i = 0; i < 64; i++)
+        {if (boraddata.get(i / 8, i % 8) == true)
+            {
+                Debug.Log(i+":"+1);
+            }
+            else
+            {
+                Debug.Log(i+":"+0);
+            }
+        }
     }
 }
