@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boraddata: {fileID: 1689805942}
+  HowImg: {fileID: 8984206086395430938}
   btnImgs:
   - {fileID: 1714422894}
   - {fileID: 472498282}
@@ -776,6 +777,7 @@ MonoBehaviour:
   - {fileID: 1482997209}
   - {fileID: 1933651227}
   - {fileID: 559487342}
+  player: []
 --- !u!4 &1701134343 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4693459678315921680, guid: a62768c54c1305241add48ce08dd3f1a, type: 3}
@@ -1050,3 +1052,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6df8a3aa70ad4074bafa4d601081fa03, type: 3}
+--- !u!114 &8984206086395430938 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2098448167553936851, guid: 6df8a3aa70ad4074bafa4d601081fa03, type: 3}
+  m_PrefabInstance: {fileID: 8984206086395430937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
