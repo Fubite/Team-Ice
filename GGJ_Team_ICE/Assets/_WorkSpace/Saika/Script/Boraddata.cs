@@ -99,4 +99,5 @@ public class Boraddata:MonoBehaviour
         Reverse(h, v, 1, 1);  //右下方向
         Reverse(h, v, -1, 1); //左下方向
     }//隣をひっくり返すオセロのアレ
+    //public void playerpoint(int)
 }
