@@ -79,13 +79,13 @@ public class Boraddata:MonoBehaviour
                 {
                     //Othello[x2, y2] = Othello[h, v];//set
                     Othello[x2, y2].reverse();
-                    //if (Othello[x2, y2].frontback)
+                    //if (Othello[x2, y2].frontback)//trueは黒
                     //{
-                    //    player[0].deth = true;
+                    //    player[0].deth = true;//白死んだ～
                     //}
                     //else
                     //{
-                    //    player[1].deth = true;
+                    //    player[1].deth = true;//黒死んだ～
                     //}
                     x2 += directionH;
                     y2 += directionV;
@@ -110,7 +110,7 @@ public class Boraddata:MonoBehaviour
         Reverse(h, v, -1, 1); //左下方向
     }//隣をひっくり返すオセロのアレ
 
-    //public void playerpoint(player player,int id)
+    //public void playerpoint(player player, int id)
     //{
     //    //0はプレイヤー1　１はプレイヤー２
     //    this.player[id] = player;
