@@ -117,7 +117,7 @@ public class TitleManager : MonoBehaviour
         }
         outlines[(int)menu].effectColor = new Color(0, 0, 0, alpha);
         //Œˆ’è
-        if (Input.GetButtonDown("Submit"))
+        if (Input.GetButtonDown("Submit") || Input.GetKeyDown(KeyCode.Space))
         {
             switch(menu)
             {
