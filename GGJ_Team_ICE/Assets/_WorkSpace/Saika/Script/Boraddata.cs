@@ -8,7 +8,7 @@ public class Boraddata:MonoBehaviour
     public Othellodata[,] getOthel { get { return Othello; } }//ゲッター　ざっくり関数みたいなヤツ。読み取り専用とかいう奴らしい
     [SerializeField] GameObject Othelloprefab;//オセロのオブジェクト
     public Transform[] mass = new Transform[64];//一マスごとの座標
-    player[] player = new player[2];//0はプレイヤー１白　１はプレイヤー２黒
+    public player[] player;//0はプレイヤー１白　１はプレイヤー２黒
     
     private void Start()
     {
@@ -114,6 +114,7 @@ public class Boraddata:MonoBehaviour
         Reverse(h, v, -1, -1);//左上方向
         Reverse(h, v, 1, 1);  //右下方向
         Reverse(h, v, -1, 1); //左下方向
+        SoundManager.Instance.SePlayer.Play("Othello");
     }//隣をひっくり返すオセロのアレ
     public void playerpoint(player player, int id)
     {
