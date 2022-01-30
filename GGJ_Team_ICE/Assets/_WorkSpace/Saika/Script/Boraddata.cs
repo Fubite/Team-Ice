@@ -69,7 +69,7 @@ public class Boraddata:MonoBehaviour
         while (x < 8 && x >= 0 && y < 8 && y >= 0)
         {
             //é©ï™ÇÃãÓÇæÇ¡ÇΩèÍçá
-            if (Othello[x, y] == Othello[h, v])
+            if (Othello[x, y].frontback == Othello[h, v].frontback)
             {
                 //Ç–Ç¡Ç≠ÇËï‘Ç∑
                 int x2 = h + directionH, y2 = v + directionV;
