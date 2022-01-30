@@ -640,8 +640,8 @@ MonoBehaviour:
   whiteSumCntTxt: {fileID: 154782850}
   resultCanvas: {fileID: 2064474334}
   winSprite:
-  - {fileID: 8369043560249748229, guid: 7725599e5d375db4c98c5d5250ac6d98, type: 3}
-  - {fileID: -6656958086601750620, guid: 7725599e5d375db4c98c5d5250ac6d98, type: 3}
+  - {fileID: 21300000, guid: ad641cabee2a02e4eae23520a3d8988d, type: 3}
+  - {fileID: 21300000, guid: 7e5f4c21e93f3fb458e8c14b2975c5d0, type: 3}
   winCharaImg: {fileID: 2064474336}
   winText: {fileID: 2064474335}
 --- !u!1 &916732779
@@ -1540,7 +1540,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a4959230d31a40248bd04af83638cd42, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c589b57fe70d676449b169bcf3a30d81, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
