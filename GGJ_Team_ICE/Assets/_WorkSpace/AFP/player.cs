@@ -33,7 +33,7 @@ public class player : MonoBehaviour
 
     private int direction = 1;              //キャラの方向　
     private bool[,] masu = new bool[8, 8];  //ボードの升目のオセロ情報取得よう変数
-    private int x = 0, y = 0;               //主人公のボードにおける座標
+    public int x = 0, y = 0;                //主人公のボードにおける座標
     private bool masu_check = false;        //キャラの移動先チェック用変数　false = 白　true = 黒
 
 
@@ -208,7 +208,10 @@ public class player : MonoBehaviour
                 if (y != 7 && masu[x, 7 - y - 1] != masu_check)
                 {
                     //その色を自分の色に変える
-
+                    if(Input.GetButtonDown("ButtonA_P"+p_num))
+                    {
+                        board.ReverseAll(x, 7 - y - 1);
+                    }
                 }
             }
             if (direction == 1)
@@ -217,7 +220,10 @@ public class player : MonoBehaviour
                 if (y != 0 && masu[x, 7 - y + 1] != masu_check)
                 {
                     //その色を自分の色に変える
-
+                    if (Input.GetButtonDown("ButtonA_P" + p_num))
+                    {
+                        board.ReverseAll(x, 7 - y + 1);
+                    }
                 }
             }
             if (direction == 2)
@@ -226,7 +232,10 @@ public class player : MonoBehaviour
                 if (x != 7 && masu[x + 1, 7 - y] != masu_check)
                 {
                     //その色を自分の色に変える
-
+                    if (Input.GetButtonDown("ButtonA_P" + p_num))
+                    {
+                        board.ReverseAll(x + 1, 7 - y);
+                    }
                 }
             }
             if (direction == 3)
@@ -235,7 +244,10 @@ public class player : MonoBehaviour
                 if (x != 0 && masu[x - 1, 7 - y] != masu_check)
                 {
                     //その色を自分の色に変える
-
+                    if (Input.GetButtonDown("ButtonA_P" + p_num))
+                    {
+                        board.ReverseAll(x - 1, 7 - y);
+                    }
                 }
             }
 
