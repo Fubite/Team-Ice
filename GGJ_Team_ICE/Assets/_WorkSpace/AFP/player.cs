@@ -14,10 +14,13 @@ public class player : MonoBehaviour
     public Animator anim;
 
     [SerializeField, Header("オセロ2D入れる")]
-    public GameObject board;
+    public Boraddata board;
 
-    [Header("主人公の操作できるかを管理")]
+    [Header("(public)主人公の操作できるかを管理")]
     public bool move_stop = false;
+
+    [Header("(public)主人公が死ぬとtrueになる")]
+    public bool deth = false;
 
     private Vector3 p_vec = new Vector3(0, 0, 0);           //主人公へ代入用ベクトル
     bool isMove = false; 
@@ -28,31 +31,48 @@ public class player : MonoBehaviour
     Vector3 startPos;
     Vector3 endPos;
 
-    private int direction = 1;      //キャラの方向　
+    private int direction = 1;              //キャラの方向　
+    private bool[,] masu = new bool[8, 8];  //ボードの升目のオセロ情報取得よう変数
+    private int x = 0, y = 0;               //主人公のボードにおける座標
+    private bool masu_check = false;        //キャラの移動先チェック用変数　false = 白　true = 黒
 
 
-    private bool[,] masu = new bool[8, 8];
-
-    int x=2,y = 2;
 
     // Start is called before the first frame update
     void Start()
     {
+        //p1,p2の区別用
         if (p_num == 1)
         {
             anim.SetBool("player", true);
+            masu_check = false;
+            x = 0;y = 0;
         }
         else
         {
             anim.SetBool("player", false);
+            masu_check = true;
+            x = 7; y = 7;
+        }
+        //boardデータの取得
+        for(int i=0;i<8;i++)
+        {
+            for(int j=0;j<8;j++)
+            {
+                masu[i,j] = board.getOthel[i,j].frontback;
+            }
+        }
+        
+
+        Debug.Log("" + masu[x, 7 - y]);
+        for (int i = 0; i < 8; i++)
+        {
+            //Debug.Log(i + ":" + board.omoteura[0, i]);
         }
     }
 
     private void Move()
     {
-        //masu = board.GetComponent<Boraddata>().bord;
-
-
         elapsed += Time.deltaTime;
         float t = elapsed / moveTime;
 
@@ -82,71 +102,142 @@ public class player : MonoBehaviour
         Vector2 input_abs = new Vector2(Mathf.Abs(Input.GetAxis("HorizontalL_P" + p_num)), Mathf.Abs(Input.GetAxis("VerticalL_P" + p_num)));
         Vector2 input= new Vector2(Input.GetAxis("HorizontalL_P" + p_num), Input.GetAxis("VerticalL_P" + p_num));
 
-        Debug.Log("" + board.GetComponent<Boraddata>().bord[1, 1]);
+        //boardデータの取得
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                masu[i, j] = board.getOthel[i, j].frontback;
+            }
+        }
+
+        //Debug.Log("" + masu[x, 7 - y]);
+        //for (int i = 0; i < 8; i++)
+        //{
+        //    Debug.Log(i + ":" + board.get(8, 8)[0, i]);
+        //}
+
         //スタート、終了時動かせない
         if (!move_stop)
         {
-            Debug.Log(x + ":" + y);
-            //盤面外はいけない
-            if (x > 0 && x < 7 && y > 0 && y < 7)
+            //移動処理
+            if (!isMove)
             {
-                //移動処理
-                if (!isMove)
+                //上下優先処理
+                if (input_abs.x < input_abs.y)
                 {
-                    //上下優先処理
-                    if (input_abs.x < input_abs.y)
+                    //上移動処理
+                    if (-input.y > 0 && y < 7)
                     {
-                        //上にが自分とは違う色の場合
-                        //if(y-1==kuro)
-                        if (-input.y > 0)//上移動処理
+                        //上に何もない時且つ、自分とは違う色の場合
+                        if (y != 7 && masu[x, 7 - y - 1] == masu_check) 
                         {
                             startPos = transform.position;
-                            endPos = transform.position + new Vector3(0, 1, 0);
+                            endPos = transform.position + new Vector3(0, move_power, 0);
                             isMove = true;
                             anim.SetBool("up", true);
-                            anim.SetFloat("idleDir" + p_num, 0);
-                            direction = 0;
+                            y++;
                         }
-                        else if (-input.y < 0)//下移動処理
+                        //board.GetComponent<Boraddata>().omoteura[2,2 ] = false;
+
+                        anim.SetFloat("idleDir" + p_num, 0);
+                        direction = 0;
+                    }
+                    //下移動処理
+                    else if (-input.y < 0 && y > 0)
+                    {
+                        //上にが自分とは違う色の場合
+                        if (y != 0 && masu[x, 7 - y + 1] == masu_check) 
                         {
                             startPos = transform.position;
-                            endPos = transform.position + new Vector3(0, -1, 0);
+                            endPos = transform.position + new Vector3(0, -move_power, 0);
                             isMove = true;
                             anim.SetBool("down", true);
-                            anim.SetFloat("idleDir" + p_num, 1);
-                            direction = 1;
+                            y--;
                         }
-                    }
-                    else//左右優先処理
-                    {
-                        if (input.x > 0)//右優先処理
-                        {
-                            startPos = transform.position;
-                            endPos = transform.position + new Vector3(1, 0, 0);
-                            isMove = true;
-                            anim.SetBool("right", true);
-                            anim.SetFloat("idleDir" + p_num, 2);
-                            direction = 2;
-                        }
-                        else if (input.x < 0)//左優先処理
-                        {
-                            startPos = transform.position;
-                            endPos = transform.position + new Vector3(-1, 0, 0);
-                            isMove = true;
-                            anim.SetBool("left", true);
-                            anim.SetFloat("idleDir" + p_num, 3);
-                            direction = 3;
-                        }
+                        anim.SetFloat("idleDir" + p_num, 1);
+                        direction = 1;
                     }
                 }
+                //左右優先処理
                 else
                 {
-                    Move();
+                    //右優先処理
+                    if (input.x > 0 && x < 7)
+                    {
+                        //上にが自分とは違う色の場合
+                        if (x != 7 && masu[x + 1, 7 - y] == masu_check) 
+                        {
+                            startPos = transform.position;
+                            endPos = transform.position + new Vector3(move_power, 0, 0);
+                            isMove = true;
+                            anim.SetBool("right", true);
+                            x++;
+                        }
+                        anim.SetFloat("idleDir" + p_num, 2);
+                        direction = 2;
+                    }
+                    //左優先処理
+                    else if (input.x < 0 && x > 0)
+                    {
+                        //上にが自分とは違う色の場合
+                        if (x != 0 && masu[x - 1, 7 - y] == masu_check) 
+                        {
+                            startPos = transform.position;
+                            endPos = transform.position + new Vector3(-move_power, 0, 0);
+                            isMove = true;
+                            anim.SetBool("left", true);
+                            x--;
+                        }
+                        anim.SetFloat("idleDir" + p_num, 3);
+                        direction = 3;
+                    }
                 }
+            }
+            else
+            {
+                Move();
             }
 
 
+
             //ひっくり返す処理
+            if (direction == 0) 
+            {
+                //自分の色と逆の時
+                if (y != 7 && masu[x, 7 - y - 1] != masu_check)
+                {
+                    //その色を自分の色に変える
+
+                }
+            }
+            if (direction == 1)
+            {
+                //自分の色と逆の時
+                if (y != 0 && masu[x, 7 - y + 1] != masu_check)
+                {
+                    //その色を自分の色に変える
+
+                }
+            }
+            if (direction == 2)
+            {
+                //自分の色と逆の時
+                if (x != 7 && masu[x + 1, 7 - y] != masu_check)
+                {
+                    //その色を自分の色に変える
+
+                }
+            }
+            if (direction == 3)
+            {
+                //自分の色と逆の時
+                if (x != 0 && masu[x - 1, 7 - y] != masu_check)
+                {
+                    //その色を自分の色に変える
+
+                }
+            }
 
 
 

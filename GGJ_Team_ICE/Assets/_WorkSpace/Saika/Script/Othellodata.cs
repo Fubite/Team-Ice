@@ -2,29 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Othellodata :Boraddata
+public class Othellodata
 {
-    [Header("true=çï")] public bool frontback = true;
-    SpriteRenderer data;
-    public int pointX,pointY;
-    public void reverse()
+    [Header("true=çï")] public bool frontback;//Ç±ÇÃÉIÉZÉçÇÃó†ï\
+    GameObject Object;
+    SpriteRenderer spriteRenderer;
+    public Othellodata(GameObject gameobject,bool boolean)
     {
-        data = GetComponent<SpriteRenderer>();
+        this.Object = gameobject;
+        this.frontback = boolean;
+        spriteRenderer = this.Object.GetComponent<SpriteRenderer>();
+    }
+    public void reverse()//Ç–Ç¡Ç≠ÇËï‘Ç∑ä÷êî
+    {
         if (frontback)
         {
-            data.color=Color.white;
             frontback = false;
+            spriteRenderer.color = Color.white;
         }
         else
         {
-            data.color = Color.black;
             frontback = true;
+            spriteRenderer.color = Color.black;
         }
-        ReverseAll(pointX, pointY);
-    }
-    public void instance(int x,int y)
-    {
-        pointX = x;
-        pointY = y;
     }
 }

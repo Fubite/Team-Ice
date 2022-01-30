@@ -4,55 +4,39 @@ using UnityEngine;
 
 public class Autoplacement : MonoBehaviour
 {
-    [SerializeField] Boraddata boraddata;
+    //[SerializeField] Boraddata boraddata;
     [SerializeField] Othellodata othello;
     [SerializeField] GameObject[] gameboard=new GameObject[64];
     int[] count = new int[2];
     // Start is called before the first frame update
     private void Start()
     {
-        placment();
+        //placment();
     }
-    public void placment()
-    {
-        for(int i = 0; i < 64; i++)
-        {
-            boraddata.mass[i / 8, i % 8] = gameboard[i].transform;
-            Othellodata pack = Instantiate(othello, gameboard[i].transform.position,transform.rotation);
-            pack.instance(i / 8, i % 8);
-            //ÇVç∂â∫Å@ÇTÇWâEè„
-            if (i == 7)
-            {
-                pack.reverse();
-                count[0]++;
-                continue;
-            }
-            if (i == 58)
-            {
-                count[1]++;
-                continue;
-            }
-            if (Random.Range(0, 999) % 3 <= 1 && count[0] < gameboard.Length / 2)
-            {
-                pack.reverse();
-                count[0]++;//îí
-            }
-            else
-            {
-                count[1]++;
-            }
-            boraddata.set(i / 8, i % 8, pack.frontback);
-        }
-        Debug.Log("çïÅF" + count[1] + "îíÅF" + count[0]);
-        for(int i = 0; i < 64; i++)
-        {if (boraddata.get(i / 8, i % 8) == true)
-            {
-                Debug.Log(i+":"+1);
-            }
-            else
-            {
-                Debug.Log(i+":"+0);
-            }
-        }
-    }
+//    public void placment()//é©ìÆîzíu
+//    {
+//        for(int i = 0; i < 64; i++)
+//        {
+//            Othellodata pack = Instantiate(othello, gameboard[i].transform.position,transform.rotation);
+//            if (i % 8 >= 3)
+//            {
+//                pack.reverse();
+//            }
+//            ////ÇVç∂â∫Å@ÇTÇWâEè„
+//            //if (i == 7)
+//            //{
+//            //    pack.reverse();
+//            //    count[0]++;
+//            //    //othello.set(i / 8, i % 8, false);
+//            //    continue;
+//            //}
+//            //if (i == 58)
+//            //{
+//            //    count[1]++; 
+//            //    //othello.set(i / 8, i % 8,true);
+//            //    continue;
+//            //}
+
+//        }
+//    }
 }
