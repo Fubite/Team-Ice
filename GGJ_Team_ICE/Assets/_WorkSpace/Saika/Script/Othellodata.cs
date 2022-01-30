@@ -22,12 +22,13 @@ public class Othellodata
         {
             frontback = false;
             //spriteRenderer.color = Color.white;
+            anim.SetBool("Reverse", frontback);
         }
         else
         {
             frontback = true;
             //spriteRenderer.color = Color.black;
+            anim.SetBool("Reverse", frontback);
         }
-        anim.SetTrigger("Reverse");
     }
 }
