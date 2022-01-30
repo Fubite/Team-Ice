@@ -253,6 +253,9 @@ MonoBehaviour:
   - {fileID: 1914204591}
   - {fileID: 1845598948}
   - {fileID: 844067175}
+  player:
+  - {fileID: 1862564667}
+  - {fileID: 1669720586}
 --- !u!4 &367980680
 Transform:
   m_ObjectHideFlags: 0
@@ -674,6 +677,8 @@ MonoBehaviour:
   move_stop: 0
   deth: 0
   moveTime: 0.5
+  x: 0
+  y: 0
 --- !u!212 &1669720587
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -817,6 +822,8 @@ MonoBehaviour:
   move_stop: 0
   deth: 0
   moveTime: 0.5
+  x: 0
+  y: 0
 --- !u!212 &1862564668
 SpriteRenderer:
   m_ObjectHideFlags: 0

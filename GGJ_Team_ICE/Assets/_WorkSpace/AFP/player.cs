@@ -251,7 +251,12 @@ public class player : MonoBehaviour
                 }
             }
 
-
+            //€–Sˆ—
+            Debug.Log(p_num+"deth"+deth);
+            if (deth==true)
+            {
+                this.gameObject.SetActive(false);
+            }
 
         }
     }
