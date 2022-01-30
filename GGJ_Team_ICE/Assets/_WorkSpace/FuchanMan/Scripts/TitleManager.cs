@@ -104,7 +104,7 @@ public class TitleManager : MonoBehaviour
             switch(menu)
             {
                 case MENU.START:
-                    SimpleFadeManager.Instance.FadeSceneChange("TestGame");
+                    SimpleFadeManager.Instance.FadeSceneChange("Game");
                     break;
                 case MENU.NAVI:
 
