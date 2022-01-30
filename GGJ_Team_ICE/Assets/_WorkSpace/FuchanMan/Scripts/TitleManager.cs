@@ -68,7 +68,7 @@ public class TitleManager : MonoBehaviour
         //‘€ìà–¾‰æ‘œ•\¦’†
         if (HowImg.enabled)
         {
-            if (Input.GetButtonDown("Submit"))
+            if (Input.GetButtonDown("Submit") || Input.GetKeyDown(KeyCode.Space))
             {
                 SoundManager.Instance.SePlayer.Play("Decision");
                 HowImg.enabled = false;
