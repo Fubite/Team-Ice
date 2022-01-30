@@ -10,11 +10,17 @@ public class player : MonoBehaviour
     [SerializeField, Header("プレイヤーの移動力")]
     float move_power;
 
+    [SerializeField, Header("攻撃した後のクールタイム(フレーム)")]
+    int stop_fram;
+
     [SerializeField, Header("主人公アニメーション")]
     public Animator anim;
 
     [SerializeField, Header("オセロ2D入れる")]
     public Boraddata board;
+
+    [SerializeField, Header("死亡スプライト")]
+    public Sprite deth_img;
 
     [Header("(public)主人公の操作できるかを管理")]
     public bool move_stop = false;
@@ -35,7 +41,9 @@ public class player : MonoBehaviour
     private bool[,] masu = new bool[8, 8];  //ボードの升目のオセロ情報取得よう変数
     public int x = 0, y = 0;                //主人公のボードにおける座標
     private bool masu_check = false;        //キャラの移動先チェック用変数　false = 白　true = 黒
-
+    private bool first = true;              //最初しか動かない
+    private bool attck_stop = false;        //移動中攻撃を止める処理
+    private int stop_count = 0;             //攻撃した後、一瞬動けないカウント
 
 
     // Start is called before the first frame update
@@ -54,7 +62,8 @@ public class player : MonoBehaviour
             masu_check = true;
             x = 7; y = 7;
         }
-        
+        this.gameObject.GetComponent<SpriteRenderer>().sprite = deth_img;
+        stop_count = stop_fram;
     }
 
     private void Move()
@@ -65,12 +74,15 @@ public class player : MonoBehaviour
         //補間処理
         transform.position = Vector3.Lerp(startPos, endPos, t);
 
+        attck_stop = true;
+
         //終了時の初期化
-        if(t >= 1)
+        if (t >= 1)
         {
             transform.position = endPos;
             isMove = false;
             elapsed = 0f;
+            attck_stop = false;
 
             //アニメーション終了
             anim.SetBool("down", false);
@@ -79,6 +91,22 @@ public class player : MonoBehaviour
             anim.SetBool("left", false);
         }
     }
+
+    IEnumerator DethEvent()
+    {
+        Debug.Log("deth");
+        SimpleFadeManager.Instance.FadeColor = Color.white;
+        SimpleFadeManager.Instance.Fade(0.05f, true);
+        yield return new WaitForSeconds(0.05f);
+        //  死亡状態に切り替え
+        GameObject.Destroy(this.GetComponent<Animator>());
+        this.gameObject.GetComponent<SpriteRenderer>().sprite = deth_img;
+        //
+
+        SimpleFadeManager.Instance.FadeColor = Color.black;
+        yield break;
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -109,74 +137,78 @@ public class player : MonoBehaviour
             //移動処理
             if (!isMove)
             {
-                //上下優先処理
-                if (input_abs.x < input_abs.y)
+                //攻撃時のクールタイム
+                if (stop_fram <= stop_count)
                 {
-                    //上移動処理
-                    if (-input.y > 0 && y < 7)
+                    //上下優先処理
+                    if (input_abs.x < input_abs.y)
                     {
-                        //上に何もない時且つ、自分とは違う色の場合
-                        if (y != 7 && masu[x, 7 - y - 1] == masu_check) 
+                        //上移動処理
+                        if (-input.y > 0 && y < 7)
                         {
-                            startPos = transform.position;
-                            endPos = transform.position + new Vector3(0, move_power, 0);
-                            isMove = true;
-                            anim.SetBool("up", true);
-                            y++;
-                        }
-                        //board.GetComponent<Boraddata>().omoteura[2,2 ] = false;
+                            //上に何もない時且つ、自分とは違う色の場合
+                            if (y != 7 && masu[x, 7 - y - 1] == masu_check)
+                            {
+                                startPos = transform.position;
+                                endPos = transform.position + new Vector3(0, move_power, 0);
+                                isMove = true;
+                                anim.SetBool("up", true);
+                                y++;
+                            }
+                            //board.GetComponent<Boraddata>().omoteura[2,2 ] = false;
 
-                        anim.SetFloat("idleDir" + p_num, 0);
-                        direction = 0;
-                    }
-                    //下移動処理
-                    else if (-input.y < 0 && y > 0)
-                    {
-                        //上にが自分とは違う色の場合
-                        if (y != 0 && masu[x, 7 - y + 1] == masu_check) 
-                        {
-                            startPos = transform.position;
-                            endPos = transform.position + new Vector3(0, -move_power, 0);
-                            isMove = true;
-                            anim.SetBool("down", true);
-                            y--;
+                            anim.SetFloat("idleDir" + p_num, 0);
+                            direction = 0;
                         }
-                        anim.SetFloat("idleDir" + p_num, 1);
-                        direction = 1;
-                    }
-                }
-                //左右優先処理
-                else
-                {
-                    //右優先処理
-                    if (input.x > 0 && x < 7)
-                    {
-                        //上にが自分とは違う色の場合
-                        if (x != 7 && masu[x + 1, 7 - y] == masu_check) 
+                        //下移動処理
+                        else if (-input.y < 0 && y > 0)
                         {
-                            startPos = transform.position;
-                            endPos = transform.position + new Vector3(move_power, 0, 0);
-                            isMove = true;
-                            anim.SetBool("right", true);
-                            x++;
+                            //上にが自分とは違う色の場合
+                            if (y != 0 && masu[x, 7 - y + 1] == masu_check)
+                            {
+                                startPos = transform.position;
+                                endPos = transform.position + new Vector3(0, -move_power, 0);
+                                isMove = true;
+                                anim.SetBool("down", true);
+                                y--;
+                            }
+                            anim.SetFloat("idleDir" + p_num, 1);
+                            direction = 1;
                         }
-                        anim.SetFloat("idleDir" + p_num, 2);
-                        direction = 2;
                     }
-                    //左優先処理
-                    else if (input.x < 0 && x > 0)
+                    //左右優先処理
+                    else
                     {
-                        //上にが自分とは違う色の場合
-                        if (x != 0 && masu[x - 1, 7 - y] == masu_check) 
+                        //右優先処理
+                        if (input.x > 0 && x < 7)
                         {
-                            startPos = transform.position;
-                            endPos = transform.position + new Vector3(-move_power, 0, 0);
-                            isMove = true;
-                            anim.SetBool("left", true);
-                            x--;
+                            //上にが自分とは違う色の場合
+                            if (x != 7 && masu[x + 1, 7 - y] == masu_check)
+                            {
+                                startPos = transform.position;
+                                endPos = transform.position + new Vector3(move_power, 0, 0);
+                                isMove = true;
+                                anim.SetBool("right", true);
+                                x++;
+                            }
+                            anim.SetFloat("idleDir" + p_num, 2);
+                            direction = 2;
                         }
-                        anim.SetFloat("idleDir" + p_num, 3);
-                        direction = 3;
+                        //左優先処理
+                        else if (input.x < 0 && x > 0)
+                        {
+                            //上にが自分とは違う色の場合
+                            if (x != 0 && masu[x - 1, 7 - y] == masu_check)
+                            {
+                                startPos = transform.position;
+                                endPos = transform.position + new Vector3(-move_power, 0, 0);
+                                isMove = true;
+                                anim.SetBool("left", true);
+                                x--;
+                            }
+                            anim.SetFloat("idleDir" + p_num, 3);
+                            direction = 3;
+                        }
                     }
                 }
             }
@@ -186,62 +218,75 @@ public class player : MonoBehaviour
             }
 
 
+            //クールタイム用カウント
+            stop_count++;
 
-            //ひっくり返す処理
-            if (direction == 0) 
+            if (!attck_stop)
             {
-                //自分の色と逆の時
-                if (y != 7 && masu[x, 7 - y - 1] != masu_check)
+                //ひっくり返す処理
+                if (direction == 0)
                 {
-                    //その色を自分の色に変える
-                    if(Input.GetButtonDown("ButtonA_P"+p_num))
+                    //自分の色と逆の時
+                    if (y != 7 && masu[x, 7 - y - 1] != masu_check)
                     {
-                        board.ReverseAll(x, 7 - y - 1);
+                        //その色を自分の色に変える
+                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        {
+                            board.ReverseAll(x, 7 - y - 1);
+                            stop_count = 0;
+                        }
                     }
                 }
-            }
-            if (direction == 1)
-            {
-                //自分の色と逆の時
-                if (y != 0 && masu[x, 7 - y + 1] != masu_check)
+                if (direction == 1)
                 {
-                    //その色を自分の色に変える
-                    if (Input.GetButtonDown("ButtonA_P" + p_num))
+                    //自分の色と逆の時
+                    if (y != 0 && masu[x, 7 - y + 1] != masu_check)
                     {
-                        board.ReverseAll(x, 7 - y + 1);
+                        //その色を自分の色に変える
+                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        {
+                            board.ReverseAll(x, 7 - y + 1);
+                            stop_count = 0;
+                        }
                     }
                 }
-            }
-            if (direction == 2)
-            {
-                //自分の色と逆の時
-                if (x != 7 && masu[x + 1, 7 - y] != masu_check)
+                if (direction == 2)
                 {
-                    //その色を自分の色に変える
-                    if (Input.GetButtonDown("ButtonA_P" + p_num))
+                    //自分の色と逆の時
+                    if (x != 7 && masu[x + 1, 7 - y] != masu_check)
                     {
-                        board.ReverseAll(x + 1, 7 - y);
+                        //その色を自分の色に変える
+                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        {
+                            board.ReverseAll(x + 1, 7 - y);
+                            stop_count = 0;
+                        }
                     }
                 }
-            }
-            if (direction == 3)
-            {
-                //自分の色と逆の時
-                if (x != 0 && masu[x - 1, 7 - y] != masu_check)
+                if (direction == 3)
                 {
-                    //その色を自分の色に変える
-                    if (Input.GetButtonDown("ButtonA_P" + p_num))
+                    //自分の色と逆の時
+                    if (x != 0 && masu[x - 1, 7 - y] != masu_check)
                     {
-                        board.ReverseAll(x - 1, 7 - y);
+                        //その色を自分の色に変える
+                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        {
+                            board.ReverseAll(x - 1, 7 - y);
+                            stop_count = 0;
+                        }
                     }
                 }
             }
 
             //死亡処理
-            Debug.Log(p_num+"deth"+deth);
             if (deth==true)
             {
-                this.gameObject.SetActive(false);
+                if (first)
+                {
+                    StartCoroutine(DethEvent());
+                    first = false;
+                }
+                
             }
 
         }
