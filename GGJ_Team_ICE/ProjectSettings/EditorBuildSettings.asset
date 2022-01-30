@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_WorkSpace/FuchanMan/Scenes/TestTitle.unity
-    guid: d5c6589c0d6768142af9e09b7d0359a4
+    path: Assets/Scenes/Title.unity
+    guid: babc68194fa8614489a0306ebbfe40a7
   - enabled: 1
-    path: Assets/_WorkSpace/FuchanMan/Scenes/TestGame.unity
-    guid: 443544d4dd1cbb049891bf9406696986
+    path: Assets/Scenes/Game.unity
+    guid: 15217978f2c111949994fdddf9a121f0
   m_configObjects: {}
