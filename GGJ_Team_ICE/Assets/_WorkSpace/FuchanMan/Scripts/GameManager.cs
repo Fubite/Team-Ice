@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
     //ƒQ[ƒ€ŠJnéŒ¾
     public void Ready()
     {
+        w_player.move_stop = true;
+        b_player.move_stop = true;
         SoundManager.Instance.BgmPlayer.Play("BGM2");
         gameCanvas.enabled = true;
         resultCanvas.enabled = false;
@@ -88,21 +90,8 @@ public class GameManager : MonoBehaviour
     //ŠÔØ‚ê
     void TimeUp()
     {
-        for (int x = 0; x < 8; ++x)
-        {
-            for (int y = 0; y < 8; ++y)
-            {
-                if (boradData)
-                {
-                    if (boradData.getOthel[x, y].frontback)
-                        blackCnt++;
-                    else
-                        whiteCnt++;
-                }
-            }
-        }
-        blackCnt = 30;
-        whiteCnt = 20;
+        blackCnt = boradData.getcount(true);
+        whiteCnt = boradData.getcount(false);
         winnerID = whiteCnt > blackCnt ? 2 : blackCnt > whiteCnt ? 1 : 0; 
         StartCoroutine(CountUp());
     }
@@ -189,10 +178,16 @@ public class GameManager : MonoBehaviour
                 txtTime.text = "Time : " + Mathf.CeilToInt(currentTime);
                 break;
             case STATE.GAME:
+                w_player.move_stop = false;
+                b_player.move_stop = false;
+                SoundManager.Instance.SePlayer.Play("Start(End)");
                 txtCount.text = "START!";
                 Invoke("CountTextInit", 1);
                 break;
             case STATE.END:
+                w_player.move_stop = true;
+                b_player.move_stop = true;
+                SoundManager.Instance.SePlayer.Play("Start(End)");
                 SoundManager.Instance.BgmPlayer.Stop();
                 txtCount.text = "FINISH!";
                 whiteSmallImg.enabled = false;
@@ -245,13 +240,19 @@ public class GameManager : MonoBehaviour
                     TimeUp();
                     ChangeState(STATE.END);
                 }
+                if (b_player.deth)
+                {
+                    winnerID = 2;
+                    ChangeState(STATE.END);
+                }
+                else if (w_player.deth)
+                {
+                    winnerID = 1;
+                    ChangeState(STATE.END);
+                }
                 break;
             case STATE.END:
-                if(0 >= currentTime)
-                {
-
-                }
-                else
+                if (0 < currentTime)
                 {
                     if (elapsed >= 2f)
                     {

@@ -17,6 +17,8 @@ public class TitleManager : MonoBehaviour
     float boradElapsed = 0f;
     float boradTime = 0f;
     [SerializeField]
+    Image HowImg = null;
+    [SerializeField]
     Image[] btnImgs;
     Outline[] outlines;
     Color outlineColor = Color.black;
@@ -26,6 +28,7 @@ public class TitleManager : MonoBehaviour
     {
         set
         {
+            SoundManager.Instance.SePlayer.Play("Select");
             elapsed = 1f;
             outlines[(int)menu].effectColor = Color.clear;
             menu = menu + value;
@@ -44,6 +47,8 @@ public class TitleManager : MonoBehaviour
             outlines[i] = btnImgs[i].gameObject.GetComponent<Outline>();
             outlines[i].effectColor = new Color(0, 0, 0, 0);
         }
+        if (HowImg)
+            HowImg.enabled = false;
     }
 
     // Update is called once per frame
@@ -59,6 +64,18 @@ public class TitleManager : MonoBehaviour
 
         if (SimpleFadeManager.Instance.IsFade)
             return;
+
+        //操作説明画像表示中
+        if (HowImg.enabled)
+        {
+            if (Input.GetButtonDown("Submit"))
+            {
+                SoundManager.Instance.SePlayer.Play("Decision");
+                HowImg.enabled = false;
+            }
+            return;
+        }
+
         //スティック入力
         float inputy = -Input.GetAxis("Vertical");
         elapsed += Time.deltaTime;
@@ -105,10 +122,12 @@ public class TitleManager : MonoBehaviour
             switch(menu)
             {
                 case MENU.START:
+                    SoundManager.Instance.SePlayer.Play("Decision");
                     SimpleFadeManager.Instance.FadeSceneChange("Game");
                     break;
                 case MENU.NAVI:
-
+                    SoundManager.Instance.SePlayer.Play("Decision");
+                    HowImg.enabled = true;
                     break;
                 case MENU.END:
     #if UNITY_EDITOR

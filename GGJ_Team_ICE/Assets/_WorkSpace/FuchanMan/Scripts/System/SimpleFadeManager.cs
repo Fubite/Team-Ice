@@ -11,6 +11,7 @@ public class SimpleFadeManager : SingletonMonoBehaviour<SimpleFadeManager>
     [SerializeField, Header("フェードの為のImage")] Image fadeImage;
 
     public bool IsFade { get { return fadeCoroutine != null; } }
+    public Color FadeColor { set { fadeColor = value; } }
 
     //今動いているコルーチン
     Coroutine fadeCoroutine;
