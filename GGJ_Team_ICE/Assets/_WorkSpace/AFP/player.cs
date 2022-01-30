@@ -114,7 +114,62 @@ public class player : MonoBehaviour
         //数値更新
         //コントローラー入力の絶対値取得
         Vector2 input_abs = new Vector2(Mathf.Abs(Input.GetAxis("HorizontalL_P" + p_num)), Mathf.Abs(Input.GetAxis("VerticalL_P" + p_num)));
-        Vector2 input= new Vector2(Input.GetAxis("HorizontalL_P" + p_num), Input.GetAxis("VerticalL_P" + p_num));
+        Vector2 input = new Vector2(Input.GetAxis("HorizontalL_P" + p_num), Input.GetAxis("VerticalL_P" + p_num));
+        bool isReverse = false;
+        if(p_num == 1)
+        {
+            if(Input.GetKey(KeyCode.W))
+            {
+                input_abs.y = 1;
+                input.y = -1;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                input_abs.y = 1;
+                input.y = 1;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                input_abs.x = 1;
+                input.x = -1;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                input_abs.x = 1;
+                input.x = 1;
+            }
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                isReverse = true;
+            }
+        }
+        else if( p_num == 2)
+        {
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                input_abs.y = 1;
+                input.y = -1;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                input_abs.y = 1;
+                input.y = 1;
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                input_abs.x = 1;
+                input.x = -1;
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                input_abs.x = 1;
+                input.x = 1;
+            }
+            if(Input.GetKeyDown(KeyCode.Return))
+            {
+                isReverse = true;
+            }
+        }
 
         //boardデータの取得
         for (int i = 0; i < 8; i++)
@@ -125,11 +180,6 @@ public class player : MonoBehaviour
             }
         }
 
-        //Debug.Log("" + masu[x, 7 - y]);
-        //for (int i = 0; i < 8; i++)
-        //{
-        //    Debug.Log(i + ":" + board.get(8, 8)[0, i]);
-        //}
 
         //スタート、終了時動かせない
         if (!move_stop)
@@ -230,7 +280,7 @@ public class player : MonoBehaviour
                     if (y != 7 && masu[x, 7 - y - 1] != masu_check)
                     {
                         //その色を自分の色に変える
-                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        if (Input.GetButtonDown("ButtonA_P" + p_num) || isReverse)
                         {
                             board.ReverseAll(x, 7 - y - 1);
                             stop_count = 0;
@@ -243,7 +293,7 @@ public class player : MonoBehaviour
                     if (y != 0 && masu[x, 7 - y + 1] != masu_check)
                     {
                         //その色を自分の色に変える
-                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        if (Input.GetButtonDown("ButtonA_P" + p_num) || isReverse)
                         {
                             board.ReverseAll(x, 7 - y + 1);
                             stop_count = 0;
@@ -256,7 +306,7 @@ public class player : MonoBehaviour
                     if (x != 7 && masu[x + 1, 7 - y] != masu_check)
                     {
                         //その色を自分の色に変える
-                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        if (Input.GetButtonDown("ButtonA_P" + p_num) || isReverse)
                         {
                             board.ReverseAll(x + 1, 7 - y);
                             stop_count = 0;
@@ -269,7 +319,7 @@ public class player : MonoBehaviour
                     if (x != 0 && masu[x - 1, 7 - y] != masu_check)
                     {
                         //その色を自分の色に変える
-                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        if (Input.GetButtonDown("ButtonA_P" + p_num) || isReverse)
                         {
                             board.ReverseAll(x - 1, 7 - y);
                             stop_count = 0;
