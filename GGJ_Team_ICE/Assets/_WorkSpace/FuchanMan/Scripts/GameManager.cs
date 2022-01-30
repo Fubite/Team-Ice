@@ -261,7 +261,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case STATE.RESULT:
-                if(Input.GetButtonDown("Submit"))
+                if(Input.GetButtonDown("Submit") || Input.GetKeyDown(KeyCode.Space))
                 {
                     SimpleFadeManager.Instance.FadeSceneChange("Title");
                 }
