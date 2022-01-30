@@ -54,21 +54,7 @@ public class player : MonoBehaviour
             masu_check = true;
             x = 7; y = 7;
         }
-        //boardƒf[ƒ^‚Ìæ“¾
-        for(int i=0;i<8;i++)
-        {
-            for(int j=0;j<8;j++)
-            {
-                masu[i,j] = board.getOthel[i,j].frontback;
-            }
-        }
         
-
-        Debug.Log("" + masu[x, 7 - y]);
-        for (int i = 0; i < 8; i++)
-        {
-            //Debug.Log(i + ":" + board.omoteura[0, i]);
-        }
     }
 
     private void Move()
@@ -251,7 +237,12 @@ public class player : MonoBehaviour
                 }
             }
 
-
+            //€–Sˆ—
+            Debug.Log(p_num+"deth"+deth);
+            if (deth==true)
+            {
+                this.gameObject.SetActive(false);
+            }
 
         }
     }
