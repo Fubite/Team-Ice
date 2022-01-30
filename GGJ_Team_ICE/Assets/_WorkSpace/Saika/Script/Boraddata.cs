@@ -81,14 +81,14 @@ public class Boraddata:MonoBehaviour
                     Othello[x2, y2].reverse();
                     if (Othello[x2, y2].frontback)//true‚Í•
                     {
-                        if (x2 == player[0].x && y2 == player[0].y)
+                        if (x2 == player[0].x && y2 == (7-player[0].y))
                         {
                             player[0].deth = true;//”’€‚ñ‚¾`
                         }
                     }
                     else
                     {
-                        if (x2 == player[1].x && y2 == player[1].y)
+                        if (x2 == player[1].x && y2 == (7-player[1].y-7))
                         {
                             player[1].deth = true;//•€‚ñ‚¾`
                         }
