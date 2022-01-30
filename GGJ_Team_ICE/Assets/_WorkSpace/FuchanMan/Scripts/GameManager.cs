@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField,Header("ボードデータ")]
-    Othellodata othelloData = null;
+    Boraddata boradData = null;
 
     [SerializeField]
     player w_player;    //白プレイヤー
@@ -91,9 +91,9 @@ public class GameManager : MonoBehaviour
         {
             for (int y = 0; y < 8; ++y)
             {
-                if (othelloData)
+                if (boradData)
                 {
-                    if (othelloData.bord[x, y])
+                    if (boradData.getOthel[x, y].frontback)
                         blackCnt++;
                     else
                         whiteCnt++;
@@ -235,8 +235,8 @@ public class GameManager : MonoBehaviour
             case STATE.GAME:
                 currentTime -= Time.deltaTime;
                 txtTime.text = "Time : " + Mathf.CeilToInt(currentTime);
-                //whiteTxt.text = boradData.bord
-                //blackTxt.text = boradData.bord
+                whiteTxt.text = boradData.getcount(false).ToString();
+                blackTxt.text = boradData.getcount(true).ToString();
                 if (0 >= currentTime)
                 {
                     TimeUp();
