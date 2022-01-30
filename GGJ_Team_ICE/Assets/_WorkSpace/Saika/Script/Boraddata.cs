@@ -62,6 +62,7 @@ public class Boraddata:MonoBehaviour
     }//オセロの数を数える関数
     void Reverse(int h, int v, int directionH, int directionV)
     {
+        Othello[h, v].reverse();
         //確認する座標x, yを宣言
         int x = h + directionH, y = v + directionV;
 
@@ -75,7 +76,8 @@ public class Boraddata:MonoBehaviour
                 int x2 = h + directionH, y2 = v + directionV;
                 while (!(x2 == x && y2 == y))
                 {
-                    Othello[x2, y2] = Othello[h, v];//set
+                    //Othello[x2, y2] = Othello[h, v];//set
+                    Othello[x2, y2].reverse();
                     x2 += directionH;
                     y2 += directionV;
                 }
