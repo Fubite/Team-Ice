@@ -81,7 +81,11 @@ public class Boraddata:MonoBehaviour
                     Othello[x2, y2].reverse();
                     //if (Othello[x2, y2].frontback)
                     //{
-                    //    //player
+                    //    player[0].deth = true;
+                    //}
+                    //else
+                    //{
+                    //    player[1].deth = true;
                     //}
                     x2 += directionH;
                     y2 += directionV;

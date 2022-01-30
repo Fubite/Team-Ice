@@ -15,6 +15,7 @@ public class Othellodata
         this.frontback = boolean;
         spriteRenderer = this.Object.GetComponent<SpriteRenderer>();
         anim = Object.GetComponent<Animator>();
+        anim.SetBool("Reverse", frontback);
     }
     public void reverse()//Ç–Ç¡Ç≠ÇËï‘Ç∑ä÷êî
     {
