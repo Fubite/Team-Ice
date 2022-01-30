@@ -12,7 +12,10 @@ public class TitleManager : MonoBehaviour
         END,
     }
     MENU menu;
-
+    [SerializeField]
+    Boraddata boraddata;
+    float boradElapsed = 0f;
+    float boradTime = 0f;
     [SerializeField]
     Image[] btnImgs;
     Outline[] outlines;
@@ -45,6 +48,14 @@ public class TitleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        boradElapsed += Time.deltaTime;
+        if (boradElapsed > boradTime)
+        {
+            boraddata.getOthel[Random.Range(0, 8), Random.Range(0, 8)].reverse();
+            boradTime = Random.Range(0.0f, 0.2f);
+            boradElapsed = 0f;
+        }
+
         if (SimpleFadeManager.Instance.IsFade)
             return;
         //スティック入力
