@@ -221,7 +221,15 @@ public class player : MonoBehaviour
                 if (y != 0 && masu[x, 7 - y + 1] != masu_check)
                 {
                     //その色を自分の色に変える
-
+                    if (y != 7 && masu[x, 7 - y + 1] != masu_check)
+                    {
+                        //その色を自分の色に変える
+                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        {
+                            Debug.Log(x + "," + (7 - y - 1));
+                            board.ReverseAll(x, 7 - y + 1);
+                        }
+                    }
                 }
             }
             if (direction == 2)
@@ -230,7 +238,15 @@ public class player : MonoBehaviour
                 if (x != 7 && masu[x + 1, 7 - y] != masu_check)
                 {
                     //その色を自分の色に変える
-
+                    if (y != 7 && masu[x + 1, 7 - y] != masu_check)
+                    {
+                        //その色を自分の色に変える
+                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        {
+                            Debug.Log(x + "," + (7 - y - 1));
+                            board.ReverseAll(x + 1, 7 - y);
+                        }
+                    }
                 }
             }
             if (direction == 3)
@@ -239,7 +255,15 @@ public class player : MonoBehaviour
                 if (x != 0 && masu[x - 1, 7 - y] != masu_check)
                 {
                     //その色を自分の色に変える
-
+                    if (y != 7 && masu[x - 1, 7 - y] != masu_check)
+                    {
+                        //その色を自分の色に変える
+                        if (Input.GetButtonDown("ButtonA_P" + p_num))
+                        {
+                            Debug.Log(x + "," + (7 - y - 1));
+                            board.ReverseAll(x - 1, 7 - y);
+                        }
+                    }
                 }
             }
 
