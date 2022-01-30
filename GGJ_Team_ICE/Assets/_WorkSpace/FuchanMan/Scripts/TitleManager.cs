@@ -59,7 +59,7 @@ public class TitleManager : MonoBehaviour
         if (SimpleFadeManager.Instance.IsFade)
             return;
         //スティック入力
-        float inputy = Input.GetAxis("Vertical");
+        float inputy = -Input.GetAxis("Vertical");
         elapsed += Time.deltaTime;
         if (inputy > 0.3f)
         {

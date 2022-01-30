@@ -47,8 +47,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8812b594466ea64fb12fa9a0b5ff1ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmData: []
-  seData: []
+  bgmData:
+  - name: BGM1
+    clip: {fileID: 8300000, guid: e7563668289e1624aa45254f2b01785b, type: 3}
+  - name: BGM2
+    clip: {fileID: 8300000, guid: ce628f0a071b80c4ead7f413b88d8404, type: 3}
+  - name: BGM3
+    clip: {fileID: 8300000, guid: 895374133f89b534ea65ce9a5393826e, type: 3}
+  - name: BGM4
+    clip: {fileID: 8300000, guid: 9a728e16c0f469745a41d06bf1cf1ad1, type: 3}
+  - name: BGM5
+    clip: {fileID: 8300000, guid: 7af0fc410373f794998ef1ed37b8793c, type: 3}
+  seData:
+  - name: Count
+    clip: {fileID: 8300000, guid: b58a1e41244bbfb4c899b26854ef0839, type: 3}
+  - name: Decision
+    clip: {fileID: 8300000, guid: 1263f0614fe29cf4d930fb92cacd5b5a, type: 3}
+  - name: Menu
+    clip: {fileID: 8300000, guid: dcce67d5511a9314786f3c25848c950f, type: 3}
+  - name: Othello
+    clip: {fileID: 8300000, guid: 98f913d694ae21b43ad066203b6873d7, type: 3}
+  - name: Select
+    clip: {fileID: 8300000, guid: ab77d3b5dfc23734cb2bef94aa04cb1d, type: 3}
+  - name: Start(End)
+    clip: {fileID: 8300000, guid: ccf60ce666dd49a4a89f091f3cc8edf4, type: 3}
+  - name: Walk
+    clip: {fileID: 8300000, guid: c2bc5d4585bce8145a4e600c8055f641, type: 3}
   mainVolume: 1
   bgmVolume: 1
   seVolume: 1
@@ -65,7 +89,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rule: 0
-  winner: 1
 --- !u!114 &9049568479712985918
 MonoBehaviour:
   m_ObjectHideFlags: 0
