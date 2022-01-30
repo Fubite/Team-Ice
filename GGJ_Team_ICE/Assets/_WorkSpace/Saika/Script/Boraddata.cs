@@ -88,7 +88,7 @@ public class Boraddata:MonoBehaviour
                     }
                     else
                     {
-                        if (x2 == player[1].x && y2 == (7-player[1].y-7))
+                        if (x2 == player[1].x && y2 == (7-player[1].y))
                         {
                             player[1].deth = true;//•€‚ñ‚¾`
                         }
