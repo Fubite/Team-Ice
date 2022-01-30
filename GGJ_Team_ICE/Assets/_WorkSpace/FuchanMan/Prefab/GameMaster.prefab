@@ -74,7 +74,7 @@ MonoBehaviour:
   - name: Walk
     clip: {fileID: 8300000, guid: c2bc5d4585bce8145a4e600c8055f641, type: 3}
   mainVolume: 1
-  bgmVolume: 1
+  bgmVolume: 0.5
   seVolume: 1
 --- !u!114 &9019594931261997950
 MonoBehaviour:

@@ -36,6 +36,7 @@ public class TitleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SoundManager.Instance.BgmPlayer.Play("BGM4");
         menu = MENU.START;
         outlines = new Outline[btnImgs.Length];
         for(int i = 0; i < btnImgs.Length; ++i)

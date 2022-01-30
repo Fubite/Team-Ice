@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
     //ƒQ[ƒ€ŠJŽnŽžéŒ¾
     public void Ready()
     {
+        SoundManager.Instance.BgmPlayer.Play("BGM2");
         gameCanvas.enabled = true;
         resultCanvas.enabled = false;
         blackImg.enabled = false;
@@ -192,6 +193,7 @@ public class GameManager : MonoBehaviour
                 Invoke("CountTextInit", 1);
                 break;
             case STATE.END:
+                SoundManager.Instance.BgmPlayer.Stop();
                 txtCount.text = "FINISH!";
                 whiteSmallImg.enabled = false;
                 blackSmallImg.enabled = false;
@@ -200,6 +202,7 @@ public class GameManager : MonoBehaviour
                 Invoke("CountTextInit", 2);
                 break;
             case STATE.RESULT:
+                SoundManager.Instance.BgmPlayer.Play("BGM3");
                 gameCanvas.enabled = false;
                 resultCanvas.enabled = true;
                 if(winnerID > 0)
