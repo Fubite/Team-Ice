@@ -5,13 +5,13 @@ using UnityEngine;
 public class Boraddata:MonoBehaviour
 {
     Othellodata[,] Othello;
-    public Othellodata[,] getOthel { get { return Othello; } }
-    [SerializeField] GameObject Othelloprefab;
+    public Othellodata[,] getOthel { get { return Othello; } }//ゲッター　ざっくり関数みたいなヤツ。読み取り専用とかいう奴らしい
+    [SerializeField] GameObject Othelloprefab;//オセロのオブジェクト
     public Transform[] mass = new Transform[64];//一マスごとの座標
     private void Start()
     {
         Othello = new Othellodata[8, 8];
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 8; i++)//オセロをボードに生成
         {
             for (int j = 0; j < 8; j++)
             {
@@ -24,7 +24,7 @@ public class Boraddata:MonoBehaviour
             }
         }
 
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 8; i++)//生成後、ランダムな場所のオセロと入れ替え
         {
             for (int j = 0; j < 8; j++)
             {
@@ -59,7 +59,7 @@ public class Boraddata:MonoBehaviour
             }
         }
         return x;
-    }
+    }//オセロの数を数える関数
     void Reverse(int h, int v, int directionH, int directionV)
     {
         //確認する座標x, yを宣言
@@ -85,7 +85,7 @@ public class Boraddata:MonoBehaviour
             x += directionH;
             y += directionV;
         }
-    }
+    }//隣をひっくり返すオセロのアレ
     public void ReverseAll(int h, int v)
     {
         Reverse(h, v, 1, 0);  //右方向
@@ -96,5 +96,5 @@ public class Boraddata:MonoBehaviour
         Reverse(h, v, -1, -1);//左上方向
         Reverse(h, v, 1, 1);  //右下方向
         Reverse(h, v, -1, 1); //左下方向
-    }
+    }//隣をひっくり返すオセロのアレ
 }
