@@ -277,18 +277,15 @@ public class player : MonoBehaviour
                     }
                 }
             }
-
-            //€–Sˆ—
-            if (deth==true)
+        }
+        //€–Sˆ—
+        if (deth == true)
+        {
+            if (first)
             {
-                if (first)
-                {
-                    StartCoroutine(DethEvent());
-                    first = false;
-                }
-                
+                StartCoroutine(DethEvent());
+                first = false;
             }
-
         }
     }
 }
