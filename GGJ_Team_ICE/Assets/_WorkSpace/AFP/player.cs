@@ -208,7 +208,11 @@ public class player : MonoBehaviour
                 if (y != 7 && masu[x, 7 - y - 1] != masu_check)
                 {
                     //‚»‚ÌF‚ğ©•ª‚ÌF‚É•Ï‚¦‚é
-
+                    if(Input.GetButtonDown("ButtonA_P"+p_num))
+                    {
+                        Debug.Log(x + "," + (7 - y - 1));
+                        board.ReverseAll(x, 7 - y - 1);
+                    }
                 }
             }
             if (direction == 1)

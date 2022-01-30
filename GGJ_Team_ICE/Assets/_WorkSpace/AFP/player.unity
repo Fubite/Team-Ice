@@ -635,7 +635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1669720585
 Animator:
   serializedVersion: 3
@@ -670,7 +670,7 @@ MonoBehaviour:
   p_num: 2
   move_power: 1.3
   anim: {fileID: 1669720585}
-  board: {fileID: 0}
+  board: {fileID: 367980679}
   move_stop: 0
   deth: 0
   moveTime: 0.5
@@ -733,7 +733,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1669720584}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.776781, y: 5.857962, z: 0}
+  m_LocalPosition: {x: 5.776781, y: 5.857962, z: 0.6996095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
