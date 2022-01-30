@@ -1419,6 +1419,9 @@ MonoBehaviour:
   - {fileID: 1601495772}
   - {fileID: 1601495771}
   - {fileID: 1601495770}
+  player:
+  - {fileID: 284941737}
+  - {fileID: 968176071}
 --- !u!1001 &1824307852
 PrefabInstance:
   m_ObjectHideFlags: 0
