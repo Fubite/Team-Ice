@@ -81,14 +81,14 @@ public class Boraddata:MonoBehaviour
                     Othello[x2, y2].reverse();
                     if (Othello[x2, y2].frontback)//trueは黒
                     {
-                        if (x2 == player[0].x && y2 == player[0].y)
+                        if (x2 == player[0].x && y2 == (7-player[0].y))
                         {
                             player[0].deth = true;//白死んだ～
                         }
                     }
                     else
                     {
-                        if (x2 == player[1].x && y2 == player[1].y)
+                        if (x2 == player[1].x && y2 == (7-player[1].y))
                         {
                             player[1].deth = true;//黒死んだ～
                         }
@@ -114,6 +114,7 @@ public class Boraddata:MonoBehaviour
         Reverse(h, v, -1, -1);//左上方向
         Reverse(h, v, 1, 1);  //右下方向
         Reverse(h, v, -1, 1); //左下方向
+        SoundManager.Instance.SePlayer.Play("Othello");
     }//隣をひっくり返すオセロのアレ
     public void playerpoint(player player, int id)
     {
