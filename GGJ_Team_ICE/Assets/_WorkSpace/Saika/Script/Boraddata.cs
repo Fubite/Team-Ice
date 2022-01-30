@@ -114,6 +114,7 @@ public class Boraddata:MonoBehaviour
         Reverse(h, v, -1, -1);//左上方向
         Reverse(h, v, 1, 1);  //右下方向
         Reverse(h, v, -1, 1); //左下方向
+        SoundManager.Instance.SePlayer.Play("Othello");
     }//隣をひっくり返すオセロのアレ
     public void playerpoint(player player, int id)
     {
