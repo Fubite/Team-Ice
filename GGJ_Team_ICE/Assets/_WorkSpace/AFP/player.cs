@@ -33,7 +33,7 @@ public class player : MonoBehaviour
 
     private int direction = 1;              //キャラの方向　
     private bool[,] masu = new bool[8, 8];  //ボードの升目のオセロ情報取得よう変数
-    private int x = 0, y = 0;               //主人公のボードにおける座標
+    public int x = 0, y = 0;                //主人公のボードにおける座標
     private bool masu_check = false;        //キャラの移動先チェック用変数　false = 白　true = 黒
 
 
