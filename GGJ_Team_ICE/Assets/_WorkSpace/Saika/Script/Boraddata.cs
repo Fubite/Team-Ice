@@ -79,14 +79,20 @@ public class Boraddata:MonoBehaviour
                 {
                     //Othello[x2, y2] = Othello[h, v];//set
                     Othello[x2, y2].reverse();
-                    //if (Othello[x2, y2].frontback)//true‚Í•
-                    //{ 
-                    //    player[0].deth = true;//”’€‚ñ‚¾`
-                    //}
-                    //else
-                    //{
-                    //    player[1].deth = true;//•€‚ñ‚¾`
-                    //}
+                    if (Othello[x2, y2].frontback)//true‚Í•
+                    {
+                        if (x2 == player[0].x && y2 == player[0].y)
+                        {
+                            player[0].deth = true;//”’€‚ñ‚¾`
+                        }
+                    }
+                    else
+                    {
+                        if (x2 == player[1].x && y2 == player[1].y)
+                        {
+                            player[1].deth = true;//•€‚ñ‚¾`
+                        }
+                    }
                     x2 += directionH;
                     y2 += directionV;
                 }
