@@ -69,13 +69,14 @@ public class Boraddata:MonoBehaviour
         while (x < 8 && x >= 0 && y < 8 && y >= 0)
         {
             //自分の駒だった場合
-            if (Othello[x, y] == Othello[h, v])
+            if (Othello[x, y].frontback == Othello[h, v].frontback)
             {
                 //ひっくり返す
                 int x2 = h + directionH, y2 = v + directionV;
                 while (!(x2 == x && y2 == y))
                 {
-                    Othello[x2, y2] = Othello[h, v];//set
+                    //Othello[x2, y2] = Othello[h, v];//set
+                    Othello[x2, y2].reverse();
                     x2 += directionH;
                     y2 += directionV;
                 }
@@ -88,6 +89,7 @@ public class Boraddata:MonoBehaviour
     }//隣をひっくり返すオセロのアレ
     public void ReverseAll(int h, int v)
     {
+        Othello[h, v].reverse();
         Reverse(h, v, 1, 0);  //右方向
         Reverse(h, v, -1, 0); //左方向
         Reverse(h, v, 0, -1); //上方向
